@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+    <Resource name="jdbc/SellingDatasource" auth="Container" type="javax.sql.DataSource"
+              driverClassName="org.apache.derby.jdbc.ClientDriver"
+              url="jdbc:derby://localhost:1527/ba"
+              username="app" password="password" maxActive="20"
+              maxIdle="10" maxWait="-1" />
+
+</Context>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:amq="http://activemq.apache.org/schema/core"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://cxf.apache.org/jaxrs
+        http://cxf.apache.org/schemas/jaxrs.xsd
+        http://activemq.apache.org/schema/core
+        http://activemq.apache.org/schema/core/activemq-core.xsd
+        http://camel.apache.org/schema/spring
+        http://camel.apache.org/schema/spring/camel-spring.xsd
+        http://camel.apache.org/schema/cxf
+        http://camel.apache.org/schema/cxf/camel-cxf.xsd
+    ">
+
+    <context:property-placeholder/>
+    <context:annotation-config/>
+    <context:component-scan base-package="com.ba.captwo.eda.demo" />
+    <context:component-scan base-package="com.ba.captwo.eda.demo.resources" />
+    <context:component-scan base-package="com.ba.captwo.eda.demo.routes" />
+    <context:component-scan base-package="com.ba.captwo.eda.demo.processors" />
+
+
+    <jaxrs:server id="services" address="/">
+        <jaxrs:serviceBeans>
+            <bean class="com.ba.captwo.eda.demo.resources.ReservationResource" />
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <jaxrs:client id="bookingResourceClient2"
+                  address="http://localhost:8080/sellling/booking/create" depends-on="camelContext"
+                  serviceClass="com.ba.captwo.eda.demo.interfaces.BookingResource" inheritHeaders="true">
+        <jaxrs:inInterceptors>
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+        </jaxrs:inInterceptors>
+        <jaxrs:outInterceptors>
+            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+        </jaxrs:outInterceptors>
+        <jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+        </jaxrs:providers>
+    </jaxrs:client>
+
+    <jaxrs:client id="personResourceClient2"
+                  address="http://localhost:8080/sellling/person/create"  depends-on="camelContext"
+                  serviceClass="com.ba.captwo.eda.demo.interfaces.PersonResource" inheritHeaders="true">
+        <jaxrs:inInterceptors>
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+        </jaxrs:inInterceptors>
+        <jaxrs:outInterceptors>
+            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+        </jaxrs:outInterceptors>
+        <jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+        </jaxrs:providers>
+    </jaxrs:client>
+
+    <!-- Defined the server endpoint to create the cxf-rs consumer -->
+
+<cxf:rsServer id="reservationServer" address="/reservation"
+              serviceClass="com.ba.captwo.eda.demo.resources.ReservationResource" />
+
+<cxf:rsClient id="bookingResourceClient" address="http://localhost:8080/selling/booking/create"
+              serviceClass="com.ba.captwo.eda.demo.interfaces.BookingResource"
+              inheritHeaders="true"
+              loggingFeatureEnabled="true" skipFaultLogging="true"/>
+
+<cxf:rsClient id="personResourceClient" address="http://localhost:8080/selling/person/create"
+              serviceClass="com.ba.captwo.eda.demo.interfaces.PersonResource"
+              inheritHeaders="true"
+              loggingFeatureEnabled="true" skipFaultLogging="true"/>
+
+
+    <bean id="ReservationRoute" class="com.ba.captwo.eda.demo.routes.ReservationRoute"/>
+
+    <camelContext id="camelContext" xmlns="http://camel.apache.org/schema/spring">
+        <routeBuilder ref="ReservationRoute"/>
+    </camelContext>
+
+</beans>
