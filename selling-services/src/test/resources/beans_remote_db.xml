@@ -19,8 +19,6 @@ http://www.springframework.org/schema/jee/spring-jee.xsd">
   <context:annotation-config/>
   <context:component-scan base-package="com.ba.captwo.eda.demo" />
   <context:component-scan base-package="com.ba.captwo.eda.demo.db" />
-  <bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer"/>
-  <bean class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer"/>
 
 
     <bean id="sellingDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -29,8 +27,5 @@ http://www.springframework.org/schema/jee/spring-jee.xsd">
         <property name="username" value="app" />
         <property name="password" value="ba" />
     </bean>
-
-
-
 
 </beans>
