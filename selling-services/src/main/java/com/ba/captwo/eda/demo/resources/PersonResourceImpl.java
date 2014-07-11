@@ -1,7 +1,6 @@
 package com.ba.captwo.eda.demo.resources;
 
 import com.ba.captwo.eda.demo.coreservices.PersonService;
-import com.ba.captwo.eda.demo.db.PersonDAO;
 import com.ba.captwo.eda.demo.model.*;
 import com.ba.captwo.eda.demo.model.Error;
 import org.slf4j.Logger;
@@ -18,23 +17,18 @@ import java.util.ArrayList;
  */
 @Component("PersonResource")
 @Path("/person")
-public class PersonResource {
+public class PersonResourceImpl implements PersonResource{
 
-    private final Logger log = LoggerFactory.getLogger(PersonResource.class);
+    private final Logger log = LoggerFactory.getLogger(PersonResourceImpl.class);
 
     @Autowired
     PersonService personService;
 
-
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/create")
     public Response createPerson(
-            @MatrixParam("fname") String fname,
-            @MatrixParam("lname") String lname,
-            @MatrixParam("address") String address,
-            @MatrixParam("city") String city)    {
+            String fname,
+            String lname,
+            String address,
+            String city)    {
 
         log.debug("createPerson");
         log.debug("fname : " + fname);
@@ -69,12 +63,8 @@ public class PersonResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/read")
-    public Response readPerson(
-            @MatrixParam("pid") int pid)    {
+
+    public Response readPerson(int pid)    {
 
         log.debug("readPerson");
         log.debug("pid : " + pid);
@@ -96,16 +86,8 @@ public class PersonResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/update")
-    public Response updatePerson(
-            @MatrixParam("pid") int pid,
-            @MatrixParam("fname") String fname,
-            @MatrixParam("lname") String lname,
-            @MatrixParam("address") String address,
-            @MatrixParam("city") String city)    {
+
+    public Response updatePerson(int pid, String fname, String lname, String address, String city)    {
 
         log.debug("updatePerson");
         log.debug("pid : " + pid);
@@ -143,12 +125,7 @@ public class PersonResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/delete")
-    public Response deletePerson(
-            @MatrixParam("pid") int pid)    {
+    public Response deletePerson(int pid)    {
 
         log.debug("deletePerson");
         log.debug("pid : " + pid);
@@ -170,10 +147,6 @@ public class PersonResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/list")
     public Response listPersons()    {
 
         Response response = null;
