@@ -16,7 +16,6 @@ import java.util.ArrayList;
  * Created by u760245 on 05/07/2014.
  */
 @Component("PersonResource")
-@Path("/person")
 public class PersonResourceImpl implements PersonResource{
 
     private final Logger log = LoggerFactory.getLogger(PersonResourceImpl.class);
