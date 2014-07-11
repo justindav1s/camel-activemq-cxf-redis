@@ -16,24 +16,18 @@ import java.util.ArrayList;
  * Created by u760245 on 05/07/2014.
  */
 @Component("BookingResource")
-@Path("/booking")
-public class BookingResource {
+public class BookingResourceImpl {
 
-    private final Logger log = LoggerFactory.getLogger(BookingResource.class);
+    private final Logger log = LoggerFactory.getLogger(BookingResourceImpl.class);
 
     @Autowired
     BookingDAO bookingDAO;
 
-
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/create")
     public Response createBooking(
-            @MatrixParam("pid") int pid,
-            @MatrixParam("fnum") String fnum,
-            @MatrixParam("ticks") int tickets,
-            @MatrixParam("cab") String cabin)    {
+            int pid,
+            String fnum,
+            int tickets,
+            String cabin)    {
 
         log.debug("createBooking");
         log.debug("pid : " + pid);
@@ -69,12 +63,7 @@ public class BookingResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/read")
-    public Response readBooking(
-            @MatrixParam("pnr") int pnr)    {
+    public Response readBooking(int pnr)    {
 
         log.debug("readBooking");
         log.debug("pnr : " + pnr);
@@ -103,16 +92,12 @@ public class BookingResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/update")
     public Response updateBooking(
-            @MatrixParam("pnr") int pnr,
-            @MatrixParam("pid") int pid,
-            @MatrixParam("fnum") String fnum,
-            @MatrixParam("ticks") int tickets,
-            @MatrixParam("cab") String cabin)    {
+            int pnr,
+            int pid,
+            String fnum,
+            int tickets,
+            String cabin)    {
 
         log.debug("updateBooking");
         log.debug("pnr : " + pnr);
@@ -149,12 +134,8 @@ public class BookingResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/delete")
-    public Response deleteBooking(
-            @MatrixParam("pnr") int pnr)    {
+
+    public Response deleteBooking(int pnr)    {
 
         log.debug("deleteBooking");
         log.debug("pnr : " + pnr);
@@ -182,10 +163,6 @@ public class BookingResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/list")
     public Response listBookings()    {
 
         Response response = null;
