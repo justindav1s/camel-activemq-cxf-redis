@@ -1,7 +1,6 @@
 package com.ba.captwo.eda.demo.resources;
 
 import com.ba.captwo.eda.demo.db.FlightDAO;
-import com.ba.captwo.eda.demo.db.FlightDAO;
 import com.ba.captwo.eda.demo.model.Error;
 import com.ba.captwo.eda.demo.model.Flight;
 import org.slf4j.Logger;
@@ -17,23 +16,17 @@ import java.util.ArrayList;
  * Created by u760245 on 05/07/2014.
  */
 @Component("FlightResource")
-@Path("/flight")
-public class FlightResource {
+public class FlightResourceImpl implements FlightResource {
 
-    private final Logger log = LoggerFactory.getLogger(FlightResource.class);
+    private final Logger log = LoggerFactory.getLogger(FlightResourceImpl.class);
 
     @Autowired
     FlightDAO flightDAO;
 
-
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/create")
     public Response createFlight(
-            @MatrixParam("fnum") String fnum,
-            @MatrixParam("orig") String orig,
-            @MatrixParam("dest") String dest)    {
+            String fnum,
+            String orig,
+            String dest)    {
 
         log.debug("createFlight");
         log.debug("fnum : " + fnum);
@@ -66,12 +59,7 @@ public class FlightResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/read")
-    public Response readFlight(
-            @MatrixParam("fnum") String fnum)    {
+    public Response readFlight(String fnum)    {
 
         log.debug("deleteFlight");
         log.debug("fnum : " + fnum);
@@ -99,14 +87,11 @@ public class FlightResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/update")
+
     public Response updateFlight(
-            @MatrixParam("fnum") String fnum,
-            @MatrixParam("orig") String orig,
-            @MatrixParam("dest") String dest)    {
+            String fnum,
+            String orig,
+            String dest)    {
 
         log.debug("updateFlight");
         log.debug("fnum : " + fnum);
@@ -139,12 +124,7 @@ public class FlightResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/delete")
-    public Response deleteFlight(
-            @MatrixParam("fnum") String fnum)    {
+    public Response deleteFlight(String fnum)    {
 
         log.debug("deleteFlight");
         log.debug("fnum : " + fnum);
@@ -172,10 +152,6 @@ public class FlightResource {
         return response;
     }
 
-    @GET
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/list")
     public Response listFlights()    {
 
         Response response = null;
