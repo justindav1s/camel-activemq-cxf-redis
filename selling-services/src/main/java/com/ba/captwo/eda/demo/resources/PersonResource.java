@@ -1,5 +1,6 @@
 package com.ba.captwo.eda.demo.resources;
 
+import com.ba.captwo.eda.demo.coreservices.PersonService;
 import com.ba.captwo.eda.demo.db.PersonDAO;
 import com.ba.captwo.eda.demo.model.*;
 import com.ba.captwo.eda.demo.model.Error;
@@ -22,7 +23,7 @@ public class PersonResource {
     private final Logger log = LoggerFactory.getLogger(PersonResource.class);
 
     @Autowired
-    PersonDAO personDAO;
+    PersonService personService;
 
 
     @GET
@@ -56,7 +57,7 @@ public class PersonResource {
         p.setCity(city);
 
         try {
-            p = personDAO.createPerson(p);
+            p = personService.createPerson(p);
             response = Response.status(Response.Status.OK).entity(p).build();
         }
         catch (Exception e) {
@@ -83,7 +84,7 @@ public class PersonResource {
         Person p = null;
 
         try {
-            p = personDAO.readPerson(pid);
+            p = personService.readPerson(pid);
             response = Response.status(Response.Status.OK).entity(p).build();
         }
         catch (Exception e) {
@@ -130,7 +131,7 @@ public class PersonResource {
         p.setCity(city);
 
         try {
-            p = personDAO.updatePerson(p);
+            p = personService.updatePerson(p);
             response = Response.status(Response.Status.OK).entity(p).build();
         }
         catch (Exception e) {
@@ -157,7 +158,7 @@ public class PersonResource {
         Person p = null;
 
         try {
-            personDAO.deletePerson(pid);
+            personService.deletePerson(pid);
             response = Response.status(Response.Status.OK).entity("OK").build();
         }
         catch (Exception e) {
@@ -179,7 +180,7 @@ public class PersonResource {
 
 
         try {
-            ArrayList<Person> persons = personDAO.listPersons();
+            ArrayList<Person> persons = personService.listPersons();
             response = Response.status(Response.Status.OK).entity(persons).build();
         }
         catch (Exception e) {
