@@ -19,9 +19,8 @@ http://www.springframework.org/schema/jee/spring-jee.xsd">
   <context:property-placeholder/>
   <context:annotation-config/>
   <context:component-scan base-package="com.ba.captwo.eda.demo" />
-  <context:component-scan base-package="com.ba.captwo.eda.demo.db" />
-  <bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer"/>
-  <bean class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer"/>
+    <context:component-scan base-package="com.ba.captwo.eda.demo.db" />
+    <context:component-scan base-package="com.ba.captwo.eda.demo.resources" />
 
 
     <jee:jndi-lookup id="sellingDatasource"
@@ -33,9 +32,9 @@ http://www.springframework.org/schema/jee/spring-jee.xsd">
    <jaxrs:server id="services" address="/">
     <jaxrs:serviceBeans>
         <bean class="com.ba.captwo.eda.demo.HelloWorld" />
-        <bean class="com.ba.captwo.eda.demo.resources.PersonResource" />
-        <bean class="com.ba.captwo.eda.demo.resources.BookingResource" />
-        <bean class="com.ba.captwo.eda.demo.resources.FlightResource" />
+        <bean class="com.ba.captwo.eda.demo.resources.PersonResourceImpl" />
+        <bean class="com.ba.captwo.eda.demo.resources.BookingResourceImpl" />
+        <bean class="com.ba.captwo.eda.demo.resources.FlightResourceImpl" />
     </jaxrs:serviceBeans>
     <jaxrs:providers>
         <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
