@@ -2,3 +2,4 @@
 selling-services/MyDbTest/**
 *.log
 selling-routes/activemq.data/**
+**/target/**

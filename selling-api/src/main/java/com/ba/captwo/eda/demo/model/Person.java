@@ -65,4 +65,19 @@ public class Person {
         }
         return out;
     }
+
+    @Override
+    public int hashCode() {
+        int ret = 1;
+        return ret;
+    }
+
+    @Override
+    public boolean equals(Object ob) {
+        if (ob == null) return false;
+        if (ob.getClass() != Person.class) return false;
+        Person p = (Person)ob;
+        if (this.personID != p.personID) return false;
+        return true;
+    }
 }
