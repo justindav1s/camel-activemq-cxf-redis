@@ -45,10 +45,5 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
         </jaxrs:providers>
     </jaxrs:server>
     -->
-    <bean id="PersonCoreserviceRoute" class="com.ba.captwo.eda.demo.routes.PersonCoreserviceRoute"/>
-
-    <camelContext id="PersonCoreserviceRouteContext" xmlns="http://camel.apache.org/schema/spring">
-        <routeBuilder ref="PersonCoreserviceRoute"/>
-    </camelContext>
 
 </beans>
