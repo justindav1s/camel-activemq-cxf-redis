@@ -32,6 +32,7 @@
 
     <jaxrs:server id="services" address="/">
         <jaxrs:serviceBeans>
+            <bean class="com.ba.captwo.eda.demo.resources.PersonServiceResource"/>
             <bean class="com.ba.captwo.eda.demo.resources.ReservationResource"/>
             <bean class="com.ba.captwo.eda.demo.resources.FlightEventResource"/>
         </jaxrs:serviceBeans>
@@ -47,8 +48,12 @@
                   serviceClass="com.ba.captwo.eda.demo.resources.ReservationResource"/>
 
 
+    <cxf:rsServer id="personServer" address="/person"
+                  serviceClass="com.ba.captwo.eda.demo.resources.PersonServiceResource"/>
+
     <bean id="FlightEventConsumerRoute" class="com.ba.captwo.eda.demo.routes.FlightEventConsumerRoute"/>
     <bean id="ReservationRoute" class="com.ba.captwo.eda.demo.routes.ReservationRoute"/>
+    <bean id="PersonServiceRoute" class="com.ba.captwo.eda.demo.routes.PersonServiceRoute"/>
 
     <camelContext id="ReservationContext" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="ReservationRoute"/>
@@ -56,6 +61,10 @@
 
     <camelContext id="FlightEventContext" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="FlightEventConsumerRoute"/>
+    </camelContext>
+
+    <camelContext id="PersonServiceContext" xmlns="http://camel.apache.org/schema/spring">
+        <routeBuilder ref="PersonServiceRoute"/>
     </camelContext>
 
     <amq:broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}">

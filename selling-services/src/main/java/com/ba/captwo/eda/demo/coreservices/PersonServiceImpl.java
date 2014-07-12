@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by u760245 on 11/07/2014.
  */
-@Component("PersonService")
+@Component("PersonCoreServiceBean")
 public class PersonServiceImpl implements PersonService {
 
     private final Logger log = LoggerFactory.getLogger(PersonService.class);

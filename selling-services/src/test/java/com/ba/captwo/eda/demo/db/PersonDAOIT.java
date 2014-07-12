@@ -1,6 +1,5 @@
 package com.ba.captwo.eda.demo.db;
 
-import com.ba.captwo.eda.demo.model.Booking;
 import com.ba.captwo.eda.demo.model.Person;
 import org.junit.After;
 import org.junit.Assert;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
  * Created by u760245 on 04/07/2014.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/beans.xml" })
+@ContextConfiguration(locations = {"/beans_embedded_db.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class PersonDAOIT {
 

@@ -14,6 +14,7 @@
         <cxf.version>2.7.11</cxf.version>
         <camel.version>2.13.1</camel.version>
         <spring.version>3.2.8.RELEASE</spring.version>
+        <tomcat.listen.port>8080</tomcat.listen.port>
     </properties>
     <dependencies>
         <dependency>
@@ -51,6 +52,8 @@
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
+        <!-- Testing -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
@@ -62,6 +65,8 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Derby DB -->
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
@@ -72,17 +77,41 @@
             <artifactId>derbyclient</artifactId>
             <version>10.10.2.0</version>
         </dependency>
+
+        <!-- logging -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.1.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.5</version>
+            <scope>provided</scope>
         </dependency>
 
+        <!-- Camel Dependencies -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>${camel.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test-spring</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+
+
+        <!-- App stuff -->
         <dependency>
             <groupId>com.ba.captwo.eda.demo</groupId>
             <artifactId>selling-api</artifactId>
@@ -95,24 +124,7 @@
         <finalName>selling</finalName>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.tomcat.maven</groupId>
-                    <artifactId>tomcat7-maven-plugin</artifactId>
-                    <version>2.0</version>
-                    <executions>
-                        <execution>
-                            <id>default-cli</id>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <configuration>
-                                <port>13000</port>
-                                <path>/jaxrs-service</path>
-                                <useSeparateTomcatClassLoader>true</useSeparateTomcatClassLoader>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -121,6 +133,7 @@
                         <target>1.6</target>
                     </configuration>
                 </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-eclipse-plugin</artifactId>
@@ -131,9 +144,11 @@
                         <wtpversion>2.0</wtpversion>
                     </configuration>
                 </plugin>
+
             </plugins>
         </pluginManagement>
         <plugins>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -153,35 +168,83 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.4.8</version>
+                <configuration>
+                    <configuration>
+                        <type>standalone</type>
+                        <properties>
+                            <cargo.servlet.port>8080</cargo.servlet.port>
+                            <cargo.logging>low</cargo.logging>
+                        </properties>
+                    </configuration>
+                    <container>
+                        <containerId>tomcat7x</containerId>
+                        <dependencies>
+                            <dependency>
+                                <groupId>ch.qos.logback</groupId>
+                                <artifactId>logback-classic</artifactId>
+                                <type>jar</type>
+                                <classpath>shared</classpath>
+                            </dependency>
+                            <dependency>
+                                <groupId>ch.qos.logback</groupId>
+                                <artifactId>logback-core</artifactId>
+                                <type>jar</type>
+                                <classpath>shared</classpath>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.slf4j</groupId>
+                                <artifactId>slf4j-api</artifactId>
+                                <type>jar</type>
+                                <classpath>shared</classpath>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.apache.camel</groupId>
+                                <artifactId>camel-core</artifactId>
+                                <type>jar</type>
+                                <classpath>shared</classpath>
+                            </dependency>
+                        </dependencies>
+                        <type>installed</type>
+                        <artifactInstaller>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat</artifactId>
+                            <version>7.0.54</version>
+                        </artifactInstaller>
+                    </container>
+                    <deployables>
+                        <deployable>
+                            <groupId>com.ba.captwo.eda.demo</groupId>
+                            <artifactId>selling-services</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>/${project.build.finalName}</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>start-tomcat</id>
-                        <goals>
-                            <goal>run-war</goal>
-                        </goals>
+                        <id>start-container</id>
                         <phase>pre-integration-test</phase>
-                        <configuration>
-                            <port>${test.server.port}</port>
-                            <path>/jaxrs-service</path>
-                            <fork>true</fork>
-                            <useSeparateTomcatClassLoader>true</useSeparateTomcatClassLoader>
-                        </configuration>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
                     </execution>
                     <execution>
-                        <id>stop-tomcat</id>
-                        <goals>
-                            <goal>shutdown</goal>
-                        </goals>
+                        <id>stop-container</id>
                         <phase>post-integration-test</phase>
-                        <configuration>
-                            <path>/jaxrs-service</path>
-                        </configuration>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -194,7 +257,7 @@
                         </goals>
                         <configuration>
                             <systemPropertyVariables>
-                                <service.url>http://localhost:${test.server.port}/jaxrs-service</service.url>
+                                <service.url>http://localhost:${tomcat.listen.port}/${project.build.finalName}</service.url>
                             </systemPropertyVariables>
                         </configuration>
                     </execution>
@@ -206,6 +269,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 </project>

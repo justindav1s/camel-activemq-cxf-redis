@@ -1,0 +1,4 @@
+*.iml
+selling-services/MyDbTest/**
+*.log
+selling-routes/activemq.data/**

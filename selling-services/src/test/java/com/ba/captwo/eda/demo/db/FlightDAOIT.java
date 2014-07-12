@@ -1,14 +1,11 @@
 package com.ba.captwo.eda.demo.db;
 
 import com.ba.captwo.eda.demo.model.Flight;
-import junit.framework.TestCase;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,7 +21,7 @@ import java.util.ArrayList;
  * Created by u760245 on 04/07/2014.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/beans.xml" })
+@ContextConfiguration(locations = {"/beans_embedded_db.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class FlightDAOIT {
 

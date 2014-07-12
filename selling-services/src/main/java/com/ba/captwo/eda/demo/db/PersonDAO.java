@@ -96,8 +96,8 @@ public class PersonDAO {
                 if (rs != null) {
                     rs.close();
                 }
-                st.close();
-                conn.close();
+                if (st != null) st.close();
+                if (conn != null) conn.close();
 
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -29,6 +29,7 @@ public class PersonServiceRoute extends RouteBuilder {
         from(uri).startupOrder(3)                                                               .routeId("MakeReservationParallel")
                 .to("log:input")                                                                .id("PersonServiceRoute : Log input")
                 .to("RESTRequestProcessor")                                                     .id("PersonServiceRoute : Parse Request Params")
+                .to("direct-vm:PersonCoreService")
                 .setBody(constant("OK"))                                                        .id("PersonServiceRoute : Respond to Client")
                 .end();
 

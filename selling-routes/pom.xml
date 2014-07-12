@@ -30,6 +30,7 @@
         <jolokia.version>1.2.2</jolokia.version>
         <hawtio.version>1.4.10</hawtio.version>
         <activemq.version>5.9.1</activemq.version>
+        <tomcat7.home>/Users/u760245/tomcat7</tomcat7.home>
         <app.uri>routes</app.uri>
     </properties>
 
@@ -112,6 +113,12 @@
         <!-- Camel Dependencies -->
         <dependency>
             <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>${camel.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
             <artifactId>camel-jms</artifactId>
             <version>${camel.version}</version>
         </dependency>
@@ -141,11 +148,13 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.1.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.5</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- testing -->
@@ -168,6 +177,13 @@
             <artifactId>selling-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.ba.captwo.eda.demo</groupId>
+            <artifactId>selling-services</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+            <type>war</type>
+        </dependency>
 
     </dependencies>
 
@@ -186,9 +202,12 @@
                                 <goal>run</goal>
                             </goals>
                             <configuration>
-                                <port>8080</port>
+                                <port>8070</port>
                                 <path>/${app.uri}</path>
                                 <useSeparateTomcatClassLoader>true</useSeparateTomcatClassLoader>
+                                <additionalClasspathDirs>
+                                    <additionalClasspathDir>${basedir}/tomcat_libs</additionalClasspathDir>
+                                </additionalClasspathDirs>
                             </configuration>
                         </execution>
                     </executions>
@@ -211,9 +230,16 @@
                         <wtpversion>2.0</wtpversion>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <version>1.4.8</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -233,35 +259,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>start-tomcat</id>
-                        <goals>
-                            <goal>run-war</goal>
-                        </goals>
-                        <phase>pre-integration-test</phase>
-                        <configuration>
-                            <port>${test.server.port}</port>
-                            <path>/${app.uri}</path>
-                            <fork>true</fork>
-                            <useSeparateTomcatClassLoader>true</useSeparateTomcatClassLoader>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>stop-tomcat</id>
-                        <goals>
-                            <goal>shutdown</goal>
-                        </goals>
-                        <phase>post-integration-test</phase>
-                        <configuration>
-                            <path>/${app.uri}</path>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -274,7 +272,7 @@
                         </goals>
                         <configuration>
                             <systemPropertyVariables>
-                                <service.url>http://localhost:${test.server.port}/${app.uri}</service.url>
+                                <service.url>http://localhost:8080/${app.uri}</service.url>
                             </systemPropertyVariables>
                         </configuration>
                     </execution>
@@ -282,6 +280,90 @@
                         <id>verify</id>
                         <goals>
                             <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.4.8</version>
+                <configuration>
+                    <configuration>
+                        <type>standalone</type>
+                        <properties>
+                            <cargo.servlet.port>8080</cargo.servlet.port>
+                            <cargo.logging>low</cargo.logging>
+                        </properties>
+                    </configuration>
+                    <container>
+                        <containerId>tomcat7x</containerId>
+                        <dependencies>
+                            <dependency>
+                                <groupId>ch.qos.logback</groupId>
+                                <artifactId>logback-classic</artifactId>
+                                <type>jar</type>
+                                <classpath>shared</classpath>
+                            </dependency>
+                            <dependency>
+                                <groupId>ch.qos.logback</groupId>
+                                <artifactId>logback-core</artifactId>
+                                <type>jar</type>
+                                <classpath>shared</classpath>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.slf4j</groupId>
+                                <artifactId>slf4j-api</artifactId>
+                                <type>jar</type>
+                                <classpath>shared</classpath>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.apache.camel</groupId>
+                                <artifactId>camel-core</artifactId>
+                                <type>jar</type>
+                                <classpath>shared</classpath>
+                            </dependency>
+                        </dependencies>
+                        <type>installed</type>
+                        <artifactInstaller>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat</artifactId>
+                            <version>7.0.54</version>
+                        </artifactInstaller>
+                    </container>
+                    <deployables>
+                        <deployable>
+                            <groupId>com.ba.captwo.eda.demo</groupId>
+                            <artifactId>selling-services</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>/selling</context>
+                            </properties>
+                        </deployable>
+                        <deployable>
+                            <groupId>com.ba.captwo.eda.demo</groupId>
+                            <artifactId>selling-routes</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>/routes</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>start-container</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-container</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
                         </goals>
                     </execution>
                 </executions>

@@ -9,7 +9,6 @@ import javax.ws.rs.core.Response;
  * Created by u760245 on 05/07/2014.
  */
 @Component("PersonServiceResource")
-@Path("/person")
 public class PersonServiceResource {
 
 

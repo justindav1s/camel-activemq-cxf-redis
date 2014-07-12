@@ -42,7 +42,7 @@ public class ReservationRoute extends RouteBuilder {
                 .to("log:input")                                                                .id("ReservationRoute : Log input")
                 .to("RESTRequestProcessor")                                                     .id("ReservationRoute : Split Request Params for each Service")
                 .multicast(new ReservationAggregator())                                         .id("ReservationRoute : Aggregate Service Responses")
-                .parallelProcessing().timeout(1000)
+                .parallelProcessing().timeout(1500)
                 .to("direct:CallPersonService","direct:CallBookingService")                     .id("ReservationRoute : Multicast to REST Services")
                 .end()
                 .to("ReservationProcessor").id("Compose Response");
