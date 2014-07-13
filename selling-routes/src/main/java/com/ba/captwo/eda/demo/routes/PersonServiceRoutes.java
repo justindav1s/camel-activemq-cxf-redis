@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 /**
  * Created by u760245 on 05/07/2014.
  */
-@Component("PersonServiceRoute")
 public class PersonServiceRoutes extends RouteBuilder {
 
     private final Logger log = LoggerFactory.getLogger(PersonServiceRoutes.class);

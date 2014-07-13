@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
  * Created by u760245 on 08/07/2014.
  */
 
-@Component("FlightEventComsumerRoute")
 public class FlightEventConsumerRoute extends RouteBuilder {
 
     private final Logger log = LoggerFactory.getLogger(FlightEventConsumerRoute.class);

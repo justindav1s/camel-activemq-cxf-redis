@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by u760245 on 05/07/2014.
  */
-@Component("ReservationRoute")
+
 public class ReservationRoute extends RouteBuilder {
 
     private final Logger log = LoggerFactory.getLogger(ReservationRoute.class);
