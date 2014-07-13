@@ -26,6 +26,8 @@ public class RESTRequestProcessor implements Processor {
 
     public void process(Exchange exchange) throws Exception {
 
+        log.debug("***THREAD : "+ Thread.currentThread().toString());
+
         String uri = (String)exchange.getIn().getHeader(Constants.CAMEL_URI_HEADER);
         log.info("*** Request URI : " + uri);
         processMatrixParams(uri, exchange.getIn());

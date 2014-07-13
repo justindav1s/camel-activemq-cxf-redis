@@ -58,7 +58,8 @@ public class DAOUtils {
         return nextInSeq;
     }
 
-    public ArrayList<String> listTables()   {
+    /**
+    private ArrayList<String> listTables()   {
 
         ArrayList<String> tables = new ArrayList<String>();
         String sql = "select * from SYS.SYSTABLES";
@@ -94,6 +95,7 @@ public class DAOUtils {
         }
         return tables;
     }
+     */
 
 
     public DataSource getSellingDatasource() {

@@ -1,13 +1,19 @@
 package com.ba.captwo.eda.demo.model;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 /**
  * Created by u760245 on 04/07/2014.
  */
-public class Person {
+@XmlRootElement
+public class Person extends ResourceBase {
+
 
     private int personID = 0;
     private String lastName = null;
@@ -55,29 +61,5 @@ public class Person {
         this.city = city;
     }
 
-    public String toString()    {
-        ObjectMapper mapper = new ObjectMapper();
-        String out = null;
-        try {
-            out = mapper.writeValueAsString(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return out;
-    }
 
-    @Override
-    public int hashCode() {
-        int ret = 1;
-        return ret;
-    }
-
-    @Override
-    public boolean equals(Object ob) {
-        if (ob == null) return false;
-        if (ob.getClass() != Person.class) return false;
-        Person p = (Person)ob;
-        if (this.personID != p.personID) return false;
-        return true;
-    }
 }

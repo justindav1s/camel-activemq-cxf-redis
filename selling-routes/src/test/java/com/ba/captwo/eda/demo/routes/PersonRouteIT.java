@@ -44,12 +44,11 @@ public class PersonRouteIT {
         String value = IOUtils.toString((InputStream) r.getEntity());
         log.info("***** Test testReadPerson : " + value);
 
-        /**
+
         ObjectMapper mapper = new ObjectMapper();
         Person p = mapper.readValue(value, Person.class);
         log.info("Person : "+p.toString());
         assertNotNull(p.getFirstName());
         assertNotNull(p.getLastName());
-         */
     }
 }

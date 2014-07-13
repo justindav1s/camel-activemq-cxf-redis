@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Created by u760245 on 05/07/2014.
  */
-public class Flight {
+public class Flight extends ResourceBase{
 
     private String flightnum = null;
     private String origin = null;

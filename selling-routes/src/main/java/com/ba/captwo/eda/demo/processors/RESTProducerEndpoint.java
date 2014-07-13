@@ -29,6 +29,8 @@ public class RESTProducerEndpoint implements Processor {
 
     public void process(Exchange exchange) throws Exception {
 
+        log.debug("***THREAD : "+ Thread.currentThread().toString());
+
         String uri = (String)exchange.getIn().getHeader(Exchange.HTTP_BASE_URI);
         String accept = (String)exchange.getIn().getHeader(Exchange.ACCEPT_CONTENT_TYPE);
         String query = (String)exchange.getIn().getHeader(Exchange.HTTP_QUERY);

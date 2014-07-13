@@ -1,9 +1,12 @@
 package com.ba.captwo.eda.demo.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by u760245 on 05/07/2014.
  */
-public class Error {
+@XmlRootElement
+public class Error extends ResourceBase{
 
     private String message = null;
 

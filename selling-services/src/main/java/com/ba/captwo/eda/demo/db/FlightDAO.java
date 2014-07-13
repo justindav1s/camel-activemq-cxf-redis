@@ -31,7 +31,7 @@ public class FlightDAO {
         log.debug("createFlight");
 
         String sql = "INSERT INTO APP.FLIGHTS (flightnum, origin, destination) values (?, ?, ?)";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -68,7 +68,7 @@ public class FlightDAO {
         log.debug("readFlight");
 
         String sql = "SELECT * FROM APP.FLIGHTS where flightnum = ?";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -110,9 +110,9 @@ public class FlightDAO {
     public Flight updateFlight(Flight f)   {
 
         log.debug("updateFlight");
-        log.info("Before : "+f.toString());
+        //log.info("Before : "+f.toString());
         String sql = "UPDATE APP.FLIGHTS SET origin = ?, destination = ? where flightnum = ?";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -140,7 +140,7 @@ public class FlightDAO {
                 e.printStackTrace();
             }
         }
-        log.info("After : "+f.toString());
+        //log.info("After : "+f.toString());
         return f;
     }
 
@@ -149,7 +149,7 @@ public class FlightDAO {
         log.debug("deleteFlight");
 
         String sql = "DELETE FROM APP.FLIGHTS where flightnum = ?";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -181,7 +181,7 @@ public class FlightDAO {
 
         ArrayList<Flight> Flights = new ArrayList<Flight>();
         String sql = "SELECT * FROM APP.FLIGHTS";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;

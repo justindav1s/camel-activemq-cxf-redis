@@ -53,7 +53,7 @@
 
     <bean id="FlightEventConsumerRoute" class="com.ba.captwo.eda.demo.routes.FlightEventConsumerRoute"/>
     <bean id="ReservationRoute" class="com.ba.captwo.eda.demo.routes.ReservationRoute"/>
-    <bean id="PersonServiceRoute" class="com.ba.captwo.eda.demo.routes.PersonServiceRoute"/>
+    <bean id="PersonServiceRoute" class="com.ba.captwo.eda.demo.routes.PersonServiceRoutes"/>
 
     <camelContext id="ReservationContext" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="ReservationRoute"/>

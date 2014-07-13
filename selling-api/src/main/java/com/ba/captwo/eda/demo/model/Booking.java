@@ -2,12 +2,14 @@ package com.ba.captwo.eda.demo.model;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
 
 /**
  * Created by u760245 on 04/07/2014.
  */
-public class Booking {
+@XmlRootElement
+public class Booking extends ResourceBase{
 
     private int personID = 0;
     private int bookingId = 0;

@@ -29,10 +29,10 @@ public class BookingDAO {
 
     public Booking createBooking(Booking b)   {
 
-        daoUtils.listTables();
+        //daoUtils.listTables();
 
         String sql = "INSERT INTO BOOKINGS (PersonID, BookingID, flightNum, tickets, cabin) values (?, ?, ?, ?, ?)";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -70,7 +70,7 @@ public class BookingDAO {
     public Booking readBooking(int bookingnum)   {
 
         String sql = "SELECT * FROM APP.BOOKINGS where BookingID = ?";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -113,7 +113,7 @@ public class BookingDAO {
     public Booking readBookingByFlightnum(String flightnum)   {
 
         String sql = "SELECT * FROM APP.BOOKINGS where flightnum = ?";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -156,7 +156,7 @@ public class BookingDAO {
     public Booking updateBooking(Booking b)   {
 
         String sql = "UPDATE APP.BOOKINGS SET PersonId = ?, flightnum = ?, tickets = ?, cabin = ? where BookingID = ?";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -191,7 +191,7 @@ public class BookingDAO {
     public void deleteBooking(int bookingNum)   {
 
         String sql = "DELETE FROM APP.BOOKINGS where BookingId = ?";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -221,7 +221,7 @@ public class BookingDAO {
 
         ArrayList<Booking> bookings = new ArrayList<Booking>();
         String sql = "SELECT * FROM APP.BOOKINGS";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;

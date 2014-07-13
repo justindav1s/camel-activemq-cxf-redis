@@ -10,7 +10,7 @@ import java.io.IOException;
  * Created by u760245 on 06/07/2014.
  */
 @XmlRootElement
-public class Reservation {
+public class Reservation extends ResourceBase{
 
     @XmlElement
     private Person person;

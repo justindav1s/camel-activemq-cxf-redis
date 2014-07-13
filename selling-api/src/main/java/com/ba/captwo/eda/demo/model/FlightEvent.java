@@ -3,7 +3,7 @@ package com.ba.captwo.eda.demo.model;
 /**
  * Created by u760245 on 08/07/2014.
  */
-public class FlightEvent {
+public class FlightEvent extends ResourceBase{
 
     private String flightNum;
     private String event;

@@ -28,6 +28,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person readPerson(int personid) {
+        log.debug("***THREAD : "+ Thread.currentThread().toString());
         log.info("readPerson");
         return personDAO.readPerson(personid);
     }

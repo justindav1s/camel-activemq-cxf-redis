@@ -26,7 +26,7 @@ public class PersonDAO {
     public Person createPerson(Person p)   {
 
         String sql = "INSERT INTO APP.PERSONS (PersonID, lastName, firstName, address, city) values (?, ?, ?, ?, ?)";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -64,8 +64,10 @@ public class PersonDAO {
 
     public Person readPerson(int personid)   {
 
+        log.debug("***THREAD : "+ Thread.currentThread().toString());
+
         String sql = "SELECT * FROM APP.PERSONS where PersonID = ?";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -109,7 +111,7 @@ public class PersonDAO {
     public Person updatePerson(Person p)   {
 
         String sql = "UPDATE APP.PERSONS SET lastName = ?, firstName = ?, address = ?, city = ? where PersonID = ?";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         log.info("UPDATING PERSON : "+p.toString());
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -145,7 +147,7 @@ public class PersonDAO {
     public void deletePerson(int personId)   {
 
         String sql = "DELETE FROM APP.PERSONS where PersonID = ?";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
@@ -176,7 +178,7 @@ public class PersonDAO {
 
         ArrayList<Person> persons = new ArrayList<Person>();
         String sql = "SELECT * FROM APP.PERSONS";
-        log.debug("Datasource : "+ sellingDatasource);
+        //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
         Connection conn = null;
