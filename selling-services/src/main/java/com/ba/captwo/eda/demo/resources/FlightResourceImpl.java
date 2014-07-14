@@ -1,5 +1,6 @@
 package com.ba.captwo.eda.demo.resources;
 
+import com.ba.captwo.eda.demo.coreservices.FlightService;
 import com.ba.captwo.eda.demo.db.FlightDAO;
 import com.ba.captwo.eda.demo.model.Error;
 import com.ba.captwo.eda.demo.model.Flight;
@@ -21,7 +22,7 @@ public class FlightResourceImpl implements FlightResource {
     private final Logger log = LoggerFactory.getLogger(FlightResourceImpl.class);
 
     @Autowired
-    FlightDAO flightDAO;
+    FlightService flightService;
 
     public Response createFlight(
             String fnum,
@@ -47,7 +48,7 @@ public class FlightResourceImpl implements FlightResource {
         p.setDestination(dest);
 
         try {
-            p = flightDAO.createFlight(p);
+            p = flightService.createFlight(p);
             response = Response.status(Response.Status.OK).entity(p).build();
         }
         catch (Exception e) {
@@ -75,7 +76,7 @@ public class FlightResourceImpl implements FlightResource {
         Flight p = null;
 
         try {
-            p = flightDAO.readFlight(fnum);
+            p = flightService.readFlight(fnum);
             response = Response.status(Response.Status.OK).entity(p).build();
         }
         catch (Exception e) {
@@ -112,7 +113,7 @@ public class FlightResourceImpl implements FlightResource {
         p.setDestination(dest);
 
         try {
-            p = flightDAO.updateFlight(p);
+            p = flightService.updateFlight(p);
             response = Response.status(Response.Status.OK).entity(p).build();
         }
         catch (Exception e) {
@@ -140,7 +141,7 @@ public class FlightResourceImpl implements FlightResource {
         Flight p = null;
 
         try {
-            flightDAO.deleteFlight(fnum);
+            flightService.deleteFlight(fnum);
             response = Response.status(Response.Status.OK).entity("OK").build();
         }
         catch (Exception e) {
@@ -159,7 +160,7 @@ public class FlightResourceImpl implements FlightResource {
         Flight p = null;
 
         try {
-            ArrayList<Flight> flights = flightDAO.listFlights();
+            ArrayList<Flight> flights = flightService.listFlights();
             response = Response.status(Response.Status.OK).entity(flights).build();
         }
         catch (Exception e) {

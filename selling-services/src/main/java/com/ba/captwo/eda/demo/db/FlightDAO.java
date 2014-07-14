@@ -1,5 +1,6 @@
 package com.ba.captwo.eda.demo.db;
 
+import com.ba.captwo.eda.demo.coreservices.FlightService;
 import com.ba.captwo.eda.demo.model.Flight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

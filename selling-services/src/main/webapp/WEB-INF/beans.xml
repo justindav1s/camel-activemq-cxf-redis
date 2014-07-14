@@ -46,9 +46,11 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
     </jaxrs:server>
 
     <bean id="PersonCoreserviceRoute" class="com.ba.captwo.eda.demo.routes.PersonCoreServiceRoutes"/>
+    <bean id="FlightCoreserviceRoute" class="com.ba.captwo.eda.demo.routes.FlightCoreServiceRoutes"/>
 
-    <camelContext id="PersonCoreserviceRouteContext" xmlns="http://camel.apache.org/schema/spring">
+    <camelContext id="CoreserviceRoutesContext" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="PersonCoreserviceRoute"/>
+        <routeBuilder ref="FlightCoreserviceRoute"/>
     </camelContext>
 
 </beans>
