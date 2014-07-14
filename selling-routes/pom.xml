@@ -172,6 +172,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>17.0</version>
+        </dependency>
+
+
         <!--App stuff -->
         <dependency>
             <groupId>com.ba.captwo.eda.demo</groupId>
