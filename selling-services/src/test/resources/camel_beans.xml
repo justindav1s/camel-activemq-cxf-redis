@@ -35,10 +35,12 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
         <property name="password" value="ba"/>
     </bean>
 
-    <bean id="PersonCoreserviceRoute" class="com.ba.captwo.eda.demo.routes.PersonCoreServiceRoutes"/>
+    <bean id="PersonCoreserviceRoutes" class="com.ba.captwo.eda.demo.routes.PersonCoreServiceRoutes"/>
+    <bean id="FlightCoreServiceRoutes" class="com.ba.captwo.eda.demo.routes.FlightCoreServiceRoutes"/>
 
     <camelContext id="PersonCoreserviceRouteContext" xmlns="http://camel.apache.org/schema/spring">
-        <routeBuilder ref="PersonCoreserviceRoute"/>
+        <routeBuilder ref="PersonCoreserviceRoutes"/>
+        <routeBuilder ref="FlightCoreServiceRoutes"/>
     </camelContext>
 
 </beans>
