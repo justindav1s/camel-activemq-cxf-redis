@@ -32,6 +32,7 @@
 
     <jaxrs:server id="services" address="/">
         <jaxrs:serviceBeans>
+            <bean class="com.ba.captwo.eda.demo.resources.PersonRouteResource"/>
             <bean class="com.ba.captwo.eda.demo.resources.PersonServiceResource"/>
             <bean class="com.ba.captwo.eda.demo.resources.ReservationResource"/>
             <bean class="com.ba.captwo.eda.demo.resources.FlightEventResource"/>
