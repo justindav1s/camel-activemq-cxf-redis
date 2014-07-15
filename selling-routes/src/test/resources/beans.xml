@@ -38,7 +38,7 @@
             <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
         </jaxrs:providers>
     </jaxrs:server>
-
+    <!--
     <jaxrs:client id="bookingResourceClient2"
                   address="http://localhost:8080/sellling/booking/create" depends-on="camelContext"
                   serviceClass="com.ba.captwo.eda.demo.interfaces.BookingResource" inheritHeaders="true">
@@ -66,7 +66,7 @@
             <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
         </jaxrs:providers>
     </jaxrs:client>
-
+    -->
     <!-- Defined the server endpoint to create the cxf-rs consumer -->
 
 <cxf:rsServer id="reservationServer" address="/reservation"

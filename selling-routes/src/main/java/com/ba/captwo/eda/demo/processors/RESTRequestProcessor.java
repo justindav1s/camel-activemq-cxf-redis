@@ -1,20 +1,19 @@
 package com.ba.captwo.eda.demo.processors;
 
+import com.ba.captwo.eda.demo.model.Person;
 import com.ba.captwo.eda.demo.utils.Constants;
 import com.ba.captwo.eda.demo.utils.RouteUtils;
-import org.apache.camel.Exchange;
-import org.apache.camel.InvalidPayloadException;
-import org.apache.camel.Message;
-import org.apache.camel.Processor;
+import com.google.common.collect.ImmutableMap;
+import org.apache.camel.*;
+import org.apache.camel.impl.DefaultCamelContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.activation.DataHandler;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.util.concurrent.Future;
 
 /**
  * Created by u760245 on 06/07/2014.
@@ -24,7 +23,10 @@ public class RESTRequestProcessor implements Processor {
 
     private final Logger log = LoggerFactory.getLogger(RESTRequestProcessor.class);
 
+
     public void process(Exchange exchange) throws Exception {
+
+        testInvestigate();
 
         log.debug("***THREAD : "+ Thread.currentThread().toString());
 
@@ -46,5 +48,33 @@ public class RESTRequestProcessor implements Processor {
                 m.getHeaders().put(keyVal[0].trim(), keyVal[1].trim());
             }
         }
+    }
+
+
+    public void testInvestigate(){
+        log.info("testInvestigate");
+
+        CamelContext camelContext = new DefaultCamelContext();
+        List<String> compNames = camelContext.getComponentNames();
+        for (String compName : compNames)   {
+            log.debug("COMP : "+compName);
+        }
+        Map <String, Endpoint> endpoints = camelContext.getEndpointMap();
+        for(Map.Entry<String, Endpoint> ep : endpoints.entrySet())  {
+            log.debug("EP : "+ep.getKey()+" : "+ep.getValue());
+        }
+        List<Route> routes = camelContext.getRoutes();
+        for(Route r : routes)   {
+            log.debug("Route : "+r.getId());
+        }
+
+        Map<String, Object> personDetails = ImmutableMap.of("pid", (Object) 1921);
+
+        ProducerTemplate t = camelContext.createProducerTemplate();
+        Object pCamelOut = t.requestBodyAndHeaders("direct-vm:selling.services.person.read", null, personDetails);
+
+        log.debug("testInvestigate Person : "+pCamelOut.toString());
+
+        log.info("testInvestigate END");
     }
 }

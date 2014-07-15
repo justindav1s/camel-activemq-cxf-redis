@@ -1,9 +1,11 @@
 package com.ba.captwo.eda.demo.routes;
 
+import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Component;
 public class PersonServiceRoutes extends RouteBuilder {
 
     private final Logger log = LoggerFactory.getLogger(PersonServiceRoutes.class);
-
 
     private String uri = "cxfrs:bean:personServer";
 

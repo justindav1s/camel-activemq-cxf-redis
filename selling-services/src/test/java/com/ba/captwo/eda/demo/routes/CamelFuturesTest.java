@@ -5,9 +5,7 @@ import com.ba.captwo.eda.demo.db.PersonDAO;
 import com.ba.captwo.eda.demo.model.Flight;
 import com.ba.captwo.eda.demo.model.Person;
 import com.google.common.collect.ImmutableMap;
-import org.apache.camel.CamelContext;
-import org.apache.camel.Exchange;
-import org.apache.camel.ProducerTemplate;
+import org.apache.camel.*;
 import org.apache.camel.impl.DefaultExchange;
 import org.apache.camel.test.spring.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.DisableJmx;
@@ -20,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 
@@ -50,7 +49,25 @@ public class CamelFuturesTest {
 
 
     @Test
+    public void testInvestigate() throws Exception {
+
+        List<String> compNames = camelContext.getComponentNames();
+        for (String compName : compNames)   {
+            log.debug("COMP : "+compName);
+        }
+        Map <String, Endpoint> endpoints = camelContext.getEndpointMap();
+        for(Map.Entry<String, Endpoint> ep : endpoints.entrySet())  {
+            log.debug("EP : "+ep.getKey()+" : "+ep.getValue());
+        }
+        List<Route> routes = camelContext.getRoutes();
+        for(Route r : routes)   {
+            log.debug("Route : "+r.getId());
+        }
+    }
+
+    @Test
     public void testSyncReadPerson() throws Exception {
+
 
         Person p = buildPerson();
         Person pcreated = personDAO.createPerson(p);
