@@ -26,8 +26,6 @@ public class RESTRequestProcessor implements Processor {
 
     public void process(Exchange exchange) throws Exception {
 
-        testInvestigate();
-
         log.debug("***THREAD : "+ Thread.currentThread().toString());
 
         String uri = (String)exchange.getIn().getHeader(Constants.CAMEL_URI_HEADER);
@@ -48,33 +46,5 @@ public class RESTRequestProcessor implements Processor {
                 m.getHeaders().put(keyVal[0].trim(), keyVal[1].trim());
             }
         }
-    }
-
-
-    public void testInvestigate(){
-        log.info("testInvestigate");
-
-        CamelContext camelContext = new DefaultCamelContext();
-        List<String> compNames = camelContext.getComponentNames();
-        for (String compName : compNames)   {
-            log.debug("COMP : "+compName);
-        }
-        Map <String, Endpoint> endpoints = camelContext.getEndpointMap();
-        for(Map.Entry<String, Endpoint> ep : endpoints.entrySet())  {
-            log.debug("EP : "+ep.getKey()+" : "+ep.getValue());
-        }
-        List<Route> routes = camelContext.getRoutes();
-        for(Route r : routes)   {
-            log.debug("Route : "+r.getId());
-        }
-
-        Map<String, Object> personDetails = ImmutableMap.of("pid", (Object) 1921);
-
-        ProducerTemplate t = camelContext.createProducerTemplate();
-        Object pCamelOut = t.requestBodyAndHeaders("direct-vm:selling.services.person.read", null, personDetails);
-
-        log.debug("testInvestigate Person : "+pCamelOut.toString());
-
-        log.info("testInvestigate END");
     }
 }
