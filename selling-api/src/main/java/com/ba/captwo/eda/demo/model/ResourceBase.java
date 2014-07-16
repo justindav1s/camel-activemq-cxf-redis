@@ -5,12 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 
 /**
  * Created by u760245 on 13/07/2014.
  */
-public abstract class ResourceBase {
+public abstract class ResourceBase implements Serializable {
 
     private final Logger log = LoggerFactory.getLogger(ResourceBase.class);
 

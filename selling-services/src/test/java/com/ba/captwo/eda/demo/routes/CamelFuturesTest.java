@@ -230,7 +230,7 @@ public class CamelFuturesTest {
 
     private Flight buildFlight()    {
         Flight f = new Flight();
-        f.setFlightnum("BA175");
+        f.setFlightnum("BA176");
         f.setOrigin("LHR");
         f.setDestination("NYC");
         return f;

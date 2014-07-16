@@ -18,10 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -83,6 +85,38 @@ public class PersonResourceIT {
         log.info("Read response : "+value);
 
         personDAO.deletePerson(testPerson.getPersonID());
+    }
+
+    @Test
+    public void testReadRepeat() throws Exception {
+        log.info("Test READ REPEAT START");
+
+        Person testPerson = new Person();
+        testPerson.setLastName("Windsor");
+        testPerson.setFirstName("William");
+        testPerson.setAddress("Kensington Palace");
+        testPerson.setCity("London");
+
+        testPerson = personDAO.createPerson(testPerson);
+
+        WebClient client = WebClient.create(endpointUrl + "/person/read;pid="+testPerson.getPersonID());
+        Response r = client.accept("application/json").get();
+        showHeaders(r);
+        List<Object> cookie = getSessionCookie(r);
+        assertEquals(Response.Status.OK.getStatusCode(), r.getStatus());
+        String value = IOUtils.toString((InputStream)r.getEntity());
+        log.info("Read response : "+value);
+
+        client = WebClient.create(endpointUrl + "/person/read;pid="+testPerson.getPersonID());
+        r = client.accept("application/json").header("Cookie", cookie).get();
+        showHeaders(r);
+        assertEquals(Response.Status.OK.getStatusCode(), r.getStatus());
+        value = IOUtils.toString((InputStream)r.getEntity());
+        log.info("Read response : "+value);
+
+        personDAO.deletePerson(testPerson.getPersonID());
+
+        log.info("Test READ REPEAT END");
     }
 
     @Test
@@ -167,5 +201,19 @@ public class PersonResourceIT {
         assertTrue(persons.length > 0);
 
         personDAO.deletePerson(testPerson.getPersonID());
+    }
+
+    public void showHeaders(Response r) {
+        log.debug("HEADERs : ");
+        MultivaluedMap<String, Object> headers = r.getHeaders();
+        for(MultivaluedMap.Entry<String, List<Object>> header : headers.entrySet())  {
+            log.debug("HEADER : " + header.getKey() + " : "+ header.getValue());
+        }
+    }
+
+    public List<Object> getSessionCookie(Response r) {
+        log.debug("HEADERs : ");
+        MultivaluedMap<String, Object> headers = r.getHeaders();
+        return headers.get("Set-Cookie");
     }
 }

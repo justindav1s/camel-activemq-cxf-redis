@@ -3,12 +3,16 @@ package com.ba.captwo.eda.demo.resources;
 import com.ba.captwo.eda.demo.coreservices.PersonService;
 import com.ba.captwo.eda.demo.model.*;
 import com.ba.captwo.eda.demo.model.Error;
+import org.apache.cxf.jaxrs.ext.MessageContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
@@ -19,6 +23,12 @@ import java.util.ArrayList;
 public class PersonResourceImpl implements PersonResource{
 
     private final Logger log = LoggerFactory.getLogger(PersonResourceImpl.class);
+
+    @Context
+    private MessageContext context;
+
+    @Context
+    HttpServletRequest request;
 
     @Autowired
     PersonService personService;
@@ -65,18 +75,35 @@ public class PersonResourceImpl implements PersonResource{
 
     public Response readPerson(int pid)    {
 
+        Person p = null;
+
         log.debug("readPerson");
+        log.debug("readPerson REQUEST : "+request);
         log.debug("pid : " + pid);
 
         Response response = null;
 
-        Person p = null;
+
 
         try {
-            p = personService.readPerson(pid);
+            HttpSession session = (HttpSession)request.getSession();
+            log.debug("readPerson SESSION : "+session);
+
+            p = (Person)session.getAttribute("PERSON");
+
+            if (p == null) {
+                log.debug("Retrieving Person from DB");
+                p = personService.readPerson(pid);
+                session.setAttribute("PERSON", p);
+            }
+            else    {
+                log.debug("Retrieving Person from Session");
+            }
+
             response = Response.status(Response.Status.OK).entity(p).build();
         }
         catch (Exception e) {
+            e.printStackTrace();
             com.ba.captwo.eda.demo.model.Error err = new Error();
             err.setMessage(e.getMessage());
             response = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(err).build();

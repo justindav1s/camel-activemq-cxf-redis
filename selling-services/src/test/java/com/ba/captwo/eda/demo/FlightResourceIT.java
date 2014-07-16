@@ -156,7 +156,7 @@ public class FlightResourceIT {
 
     public Flight buildFlight() {
         Flight f = new Flight();
-        f.setFlightnum("BA175");
+        f.setFlightnum("BA177");
         f.setOrigin("LHR");
         f.setDestination("JFK");
         return f;

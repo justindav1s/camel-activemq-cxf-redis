@@ -21,24 +21,24 @@ public class PersonServiceRoutes extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from(uri).startupOrder(2)                                                               .routeId("MakeReservationParallel")
+        from(uri).startupOrder(2)                                                               .routeId("PersonServiceRoute")
                 .to("log:input")                                                                .id("PersonServiceRoute : Log input")
                 .to("RESTRequestProcessor")
-                .to("direct:PersonOpsCBR")
+                .to("direct:PersonOpsCBR")                                                      .id("PersonServiceRoute : Route to Endpoint")
                 .to("log:output")
                 .to("PersonResponseProcessor");
 
-        from("direct:PersonOpsCBR").startupOrder(1)
-            .choice()
-                .when(header(Exchange.HTTP_PATH).isEqualTo("/create"))
+        from("direct:PersonOpsCBR").startupOrder(1)                                             .routeId("PersonServiceRoute : CBR")
+            .choice()                                                                           .id("PersonServiceRoute : Which Operation ?")
+                .when(header(Exchange.HTTP_PATH).isEqualTo("/create"))                          .id("PersonServiceRoute : when /create")
                     .to("direct-vm:selling.services.person.create")
-                .when(header(Exchange.HTTP_PATH).isEqualTo("/read"))
+                .when(header(Exchange.HTTP_PATH).isEqualTo("/read"))                            .id("PersonServiceRoute : when /read")
                     .to("direct-vm:selling.services.person.read")
-                .when(header(Exchange.HTTP_PATH).isEqualTo("/update"))
+                .when(header(Exchange.HTTP_PATH).isEqualTo("/update"))                          .id("PersonServiceRoute : when /update")
                     .to("direct-vm:selling.services.person.update")
-                .when(header(Exchange.HTTP_PATH).isEqualTo("/delete"))
+                .when(header(Exchange.HTTP_PATH).isEqualTo("/delete"))                          .id("PersonServiceRoute : when /delete")
                     .to("direct-vm:selling.services.person.read")
-                .when(header(Exchange.HTTP_PATH).isEqualTo("/list"))
+                .when(header(Exchange.HTTP_PATH).isEqualTo("/list"))                            .id("PersonServiceRoute : when /list")
                     .to("direct-vm:selling.services.person.list");
 
     }

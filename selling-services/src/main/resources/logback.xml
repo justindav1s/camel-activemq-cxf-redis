@@ -6,7 +6,8 @@
     </appender>
 
     <logger name="io.hawt.web" level="INFO"/>
-    <logger name="org.apache.activemq" level="INFO"/>
+    <logger name="org.apache.cxf" level="INFO"/>
+    <logger name="org.apache.camel" level="INFO"/>
     <logger name="com.ba" level="DEBUG"/>
 
     <root level="INFO">

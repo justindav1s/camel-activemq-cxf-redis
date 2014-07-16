@@ -179,6 +179,14 @@
             <version>17.0</version>
         </dependency>
 
+        <!-- Hawt.io -->
+        <dependency>
+            <groupId>io.hawt</groupId>
+            <artifactId>hawtio-web</artifactId>
+            <version>1.4.10</version>
+            <scope>provided</scope>
+            <type>war</type>
+        </dependency>
 
         <!--App stuff -->
         <dependency>
@@ -311,8 +319,20 @@
                             <artifactId>tomcat</artifactId>
                             <version>${tomcat.version}</version>
                         </artifactInstaller>
+                        <systemProperties>
+                            <logback.configurationFile>${basedir}/src/main/resources/logback.xml</logback.configurationFile>
+                        </systemProperties>
                     </container>
                     <deployables>
+                        <deployable>
+                             <groupId>io.hawt</groupId>
+                             <artifactId>hawtio-web</artifactId>
+                             <type>war</type>
+                            <properties>
+                                <context>/hawtio</context>
+                            </properties>
+                            <location>${basedir}/hawtio/hawtio.war</location>
+                        </deployable>
                         <deployable>
                             <groupId>com.ba.captwo.eda.demo</groupId>
                             <artifactId>selling-services</artifactId>

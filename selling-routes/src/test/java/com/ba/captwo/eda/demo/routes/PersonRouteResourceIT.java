@@ -25,7 +25,14 @@ public class PersonRouteResourceIT {
 
     @BeforeClass
     public static void beforeClass() {
+        log.info("***** System.getProperty : " + System.getProperty("service.url"));
         endpointUrl = System.getProperty("service.url");
+
+        if(endpointUrl == null) {
+            endpointUrl = "http://localhost:8080/routes";
+        }
+
+        log.info("***** endpointUrl : " + endpointUrl);
     }
 
 
