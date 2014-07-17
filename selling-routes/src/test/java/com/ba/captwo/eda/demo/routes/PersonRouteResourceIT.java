@@ -43,7 +43,7 @@ public class PersonRouteResourceIT {
         log.info("Test READ");
         log.info("endpointUrl : "+endpointUrl);
 
-        WebClient client = WebClient.create(endpointUrl + "/personroute/read;pid="+1921);
+        WebClient client = WebClient.create(endpointUrl + "/personroute/read;pid="+1004);
         Response r = client.accept("application/json").get();
         assertEquals(Response.Status.OK.getStatusCode(), r.getStatus());
         String value = IOUtils.toString((InputStream)r.getEntity());

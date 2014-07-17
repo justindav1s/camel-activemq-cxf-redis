@@ -40,7 +40,7 @@ public class PersonRouteIT {
     public void testReadPerson() throws Exception {
         log.info("***** Test testReadPerson");
 
-        String uri = "/person/read;pid=1921";
+        String uri = "/person/read;pid=1004";
 
         log.info("***** Calling : "+uri);
 
