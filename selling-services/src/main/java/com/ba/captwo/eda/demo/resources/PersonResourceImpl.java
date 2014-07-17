@@ -25,9 +25,6 @@ public class PersonResourceImpl implements PersonResource{
     private final Logger log = LoggerFactory.getLogger(PersonResourceImpl.class);
 
     @Context
-    private MessageContext context;
-
-    @Context
     HttpServletRequest request;
 
     @Autowired
@@ -83,8 +80,6 @@ public class PersonResourceImpl implements PersonResource{
 
         Response response = null;
 
-
-
         try {
             HttpSession session = (HttpSession)request.getSession();
             log.debug("readPerson SESSION : "+session);
@@ -97,7 +92,7 @@ public class PersonResourceImpl implements PersonResource{
                 session.setAttribute("PERSON", p);
             }
             else    {
-                log.debug("Retrieving Person from Session");
+                log.debug("Retrieved Person from Session");
             }
 
             response = Response.status(Response.Status.OK).entity(p).build();
