@@ -4,3 +4,5 @@ selling-services/MyDbTest/**
 selling-routes/activemq.data/**
 **/target/**
 selling-routes/hawtio/hawtio.war
+
+.idea/**
