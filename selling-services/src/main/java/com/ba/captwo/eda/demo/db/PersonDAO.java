@@ -25,7 +25,7 @@ public class PersonDAO {
 
     public Person createPerson(Person p)   {
 
-        String sql = "INSERT INTO APP.PERSONS (PersonID, lastName, firstName, address, city) values (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PERSONS (PersonID, lastName, firstName, address, city) values (?, ?, ?, ?, ?)";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -66,7 +66,7 @@ public class PersonDAO {
 
         log.debug("***THREAD : "+ Thread.currentThread().toString());
 
-        String sql = "SELECT * FROM APP.PERSONS where PersonID = ?";
+        String sql = "SELECT * FROM PERSONS where PersonID = ?";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -110,7 +110,7 @@ public class PersonDAO {
 
     public Person updatePerson(Person p)   {
 
-        String sql = "UPDATE APP.PERSONS SET lastName = ?, firstName = ?, address = ?, city = ? where PersonID = ?";
+        String sql = "UPDATE PERSONS SET lastName = ?, firstName = ?, address = ?, city = ? where PersonID = ?";
         //log.debug("Datasource : "+ sellingDatasource);
         log.info("UPDATING PERSON : "+p.toString());
         ResultSet rs = null;
@@ -146,7 +146,7 @@ public class PersonDAO {
 
     public void deletePerson(int personId)   {
 
-        String sql = "DELETE FROM APP.PERSONS where PersonID = ?";
+        String sql = "DELETE FROM PERSONS where PersonID = ?";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -177,7 +177,7 @@ public class PersonDAO {
     public ArrayList<Person> listPersons()   {
 
         ArrayList<Person> persons = new ArrayList<Person>();
-        String sql = "SELECT * FROM APP.PERSONS";
+        String sql = "SELECT * FROM PERSONS";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;

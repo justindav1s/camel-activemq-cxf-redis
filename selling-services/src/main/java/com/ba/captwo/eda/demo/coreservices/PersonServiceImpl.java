@@ -2,11 +2,13 @@ package com.ba.captwo.eda.demo.coreservices;
 
 import com.ba.captwo.eda.demo.db.PersonDAO;
 import com.ba.captwo.eda.demo.model.Person;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +26,20 @@ public class PersonServiceImpl implements PersonService {
     public Person createPerson(Person p) {
         log.info("createPerson");
         return personDAO.createPerson(p);
+    }
+
+    @Override
+    public Person createPerson(String json) {
+
+        Person p = null;
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            p = mapper.readValue(json, Person.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return createPerson(p);
     }
 
     @Override

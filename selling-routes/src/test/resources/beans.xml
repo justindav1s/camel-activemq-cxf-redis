@@ -38,46 +38,18 @@
             <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
         </jaxrs:providers>
     </jaxrs:server>
-    <!--
-    <jaxrs:client id="bookingResourceClient2"
-                  address="http://localhost:8080/sellling/booking/create" depends-on="camelContext"
-                  serviceClass="com.ba.captwo.eda.demo.interfaces.BookingResource" inheritHeaders="true">
-        <jaxrs:inInterceptors>
-            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor" />
-        </jaxrs:inInterceptors>
-        <jaxrs:outInterceptors>
-            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
-        </jaxrs:outInterceptors>
-        <jaxrs:providers>
-            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
-        </jaxrs:providers>
-    </jaxrs:client>
 
-    <jaxrs:client id="personResourceClient2"
-                  address="http://localhost:8080/sellling/person/create"  depends-on="camelContext"
-                  serviceClass="com.ba.captwo.eda.demo.interfaces.PersonResource" inheritHeaders="true">
-        <jaxrs:inInterceptors>
-            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor" />
-        </jaxrs:inInterceptors>
-        <jaxrs:outInterceptors>
-            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
-        </jaxrs:outInterceptors>
-        <jaxrs:providers>
-            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
-        </jaxrs:providers>
-    </jaxrs:client>
-    -->
     <!-- Defined the server endpoint to create the cxf-rs consumer -->
 
 <cxf:rsServer id="reservationServer" address="/reservation"
               serviceClass="com.ba.captwo.eda.demo.resources.ReservationResource" />
 
-<cxf:rsClient id="bookingResourceClient" address="http://localhost:8080/selling/booking/create"
+<cxf:rsClient id="bookingResourceClient" address="/selling/booking/create"
               serviceClass="com.ba.captwo.eda.demo.interfaces.BookingResource"
               inheritHeaders="true"
               loggingFeatureEnabled="true" skipFaultLogging="true"/>
 
-<cxf:rsClient id="personResourceClient" address="http://localhost:8080/selling/person/create"
+<cxf:rsClient id="personResourceClient" address="/selling/person/create"
               serviceClass="com.ba.captwo.eda.demo.interfaces.PersonResource"
               inheritHeaders="true"
               loggingFeatureEnabled="true" skipFaultLogging="true"/>

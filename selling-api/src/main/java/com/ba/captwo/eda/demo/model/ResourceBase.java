@@ -1,6 +1,5 @@
 package com.ba.captwo.eda.demo.model;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,15 +14,23 @@ public abstract class ResourceBase implements Serializable {
 
     private final Logger log = LoggerFactory.getLogger(ResourceBase.class);
 
+    static final long serialVersionUID = 1L;
+
     public String toString() {
-        ObjectMapper mapper = new ObjectMapper();
-        String out = null;
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n"+this.getClass().getName());
         try {
-            out = mapper.writeValueAsString(this);
-        } catch (IOException e) {
+            Field[] fields = this.getClass().getDeclaredFields();
+            for (Field f : fields) {
+                f.setAccessible(true);
+                Object thisVal = f.get(this);
+                sb.append("\n"+f.getName()+" : "+thisVal);
+            }
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
-        return out;
+        return sb.toString();
     }
 
     @Override

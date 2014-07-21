@@ -5,9 +5,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by u760245 on 05/07/2014.
  */
-@XmlRootElement
-public class Error extends ResourceBase{
 
+public class Error extends ResourceBase{
+    static final long serialVersionUID = 1L;
     private String message = null;
 
     public String getMessage() {

@@ -16,6 +16,7 @@
         <spring.version>3.2.8.RELEASE</spring.version>
         <tomcat.listen.port>8080</tomcat.listen.port>
         <tomcat.version>7.0.54</tomcat.version>
+        <active.profile>dev</active.profile>
     </properties>
     <dependencies>
         <dependency>
@@ -79,6 +80,13 @@
             <version>10.10.2.0</version>
         </dependency>
 
+        <!-- Postgres -->
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+        </dependency>
+
         <!-- logging -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -99,6 +107,11 @@
             <artifactId>camel-core</artifactId>
             <version>${camel.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jackson</artifactId>
+            <version>${camel.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
@@ -133,6 +146,7 @@
             <groupId>com.ba.captwo.eda.demo</groupId>
             <artifactId>selling-api</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <!--scope>provided</scope-->
         </dependency>
 
     </dependencies>
@@ -146,8 +160,8 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <source>1.6</source>
-                        <target>1.6</target>
+                        <source>1.7</source>
+                        <target>1.7</target>
                     </configuration>
                 </plugin>
 
@@ -214,6 +228,12 @@
                                 <type>jar</type>
                                 <classpath>shared</classpath>
                             </dependency>
+                            <!--dependency>
+                                <groupId>com.ba.captwo.eda.demo</groupId>
+                                <artifactId>selling-api</artifactId>
+                                <type>jar</type>
+                                <classpath>shared</classpath>
+                            </dependency-->
                         </dependencies>
                         <type>installed</type>
                         <artifactInstaller>
@@ -223,6 +243,7 @@
                         </artifactInstaller>
                         <systemProperties>
                             <logback.configurationFile>${basedir}/src/main/resources/logback.xml</logback.configurationFile>
+                            <spring.profiles.active>${active.profile}</spring.profiles.active>
                         </systemProperties>
                     </container>
                     <deployables>

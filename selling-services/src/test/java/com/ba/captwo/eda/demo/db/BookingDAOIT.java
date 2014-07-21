@@ -44,8 +44,8 @@ public class BookingDAOIT {
     public void setUp() throws Exception {
 
         log.info("setUp");
-        createSequence();
-        createTable();
+        //createSequence();
+        //createTable();
 
         log.info("buildTestBookings");
         testBooking = new Booking();
@@ -68,8 +68,8 @@ public class BookingDAOIT {
     @After
     public void tearDown() throws Exception {
         log.info("tearDown");
-        dropSequence();
-        dropTable();
+        //dropSequence();
+        //dropTable();
     }
 
 
@@ -132,7 +132,7 @@ public class BookingDAOIT {
     public void testList() throws Exception {
 
         log.info("testList");
-
+        daoUtils.truncateTable("bookings");
         ArrayList<Booking> bookings = bookingDAO.listBookings();
         log.info("booking count : "+bookings.size());
         Assert.assertEquals(0, bookings.size());

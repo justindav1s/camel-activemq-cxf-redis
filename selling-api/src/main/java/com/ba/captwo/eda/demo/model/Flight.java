@@ -1,6 +1,5 @@
 package com.ba.captwo.eda.demo.model;
 
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 
@@ -8,7 +7,7 @@ import java.io.IOException;
  * Created by u760245 on 05/07/2014.
  */
 public class Flight extends ResourceBase{
-
+    static final long serialVersionUID = 1L;
     private String flightnum = null;
     private String origin = null;
     private String destination = null;
@@ -37,14 +36,4 @@ public class Flight extends ResourceBase{
         this.destination = destination;
     }
 
-    public String toString()    {
-        ObjectMapper mapper = new ObjectMapper();
-        String out = null;
-        try {
-            out = mapper.writeValueAsString(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return out;
-    }
 }

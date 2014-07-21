@@ -34,7 +34,7 @@ public class DAOUtils {
         try {
             conn = getSellingDatasource().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("VALUES (NEXT VALUE FOR BA_SEQ)");
+            rs = st.executeQuery("select nextval('BA_SEQ')");
             while (rs.next()) {
                 nextInSeq = rs.getInt(1);
             }
@@ -96,6 +96,36 @@ public class DAOUtils {
         return tables;
     }
      */
+
+    public void truncateTable(String table)   {
+
+        log.debug("TRANCATING : "+ table);
+
+        String sql = "TRUNCATE "+table;
+        log.debug("Datasource : "+ sellingDatasource);
+        ResultSet rs = null;
+        PreparedStatement st = null;
+        Connection conn = null;
+        try {
+            conn = sellingDatasource.getConnection();
+            st = conn.prepareStatement(sql);
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null)st.close();
+                if (conn != null)conn.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
     public DataSource getSellingDatasource() {

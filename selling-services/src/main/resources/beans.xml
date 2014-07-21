@@ -7,9 +7,9 @@
        xmlns:jee="http://www.springframework.org/schema/jee"
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/context/spring-context.xsd
 http://cxf.apache.org/jaxrs
 http://cxf.apache.org/schemas/jaxrs.xsd
 http://www.springframework.org/schema/jee
@@ -19,6 +19,11 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
 
+    <import resource="./default-beans.xml"/>
+    <import resource="./openshift-beans.xml"/>
+
+    <context:property-placeholder system-properties-mode="OVERRIDE" location="classpath*:*.properties"/>
+
     <context:property-placeholder/>
     <context:annotation-config/>
     <context:component-scan base-package="com.ba.captwo.eda.demo"/>
@@ -27,16 +32,11 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
     <context:component-scan base-package="com.ba.captwo.eda.demo.routes"/>
 
 
-    <jee:jndi-lookup id="sellingDatasource"
-                     jndi-name="jdbc/SellingDatasource"
-                     expected-type="javax.sql.DataSource"
-                     lookup-on-startup="true"/>
-
-
     <jaxrs:server id="services" address="/">
         <jaxrs:serviceBeans>
             <bean class="com.ba.captwo.eda.demo.HelloWorld"/>
             <bean class="com.ba.captwo.eda.demo.resources.PersonResourceImpl"/>
+            <bean class="com.ba.captwo.eda.demo.resources.PersonAsyncRouteResource"/>
             <bean class="com.ba.captwo.eda.demo.resources.BookingResourceImpl"/>
             <bean class="com.ba.captwo.eda.demo.resources.FlightResourceImpl"/>
         </jaxrs:serviceBeans>
@@ -48,9 +48,11 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
     <bean id="PersonCoreserviceRoute" class="com.ba.captwo.eda.demo.routes.PersonCoreServiceRoutes"/>
     <bean id="FlightCoreserviceRoute" class="com.ba.captwo.eda.demo.routes.FlightCoreServiceRoutes"/>
 
-    <camelContext id="CoreserviceRoutesContext" xmlns="http://camel.apache.org/schema/spring">
+    <camelContext id="CoreserviceRoutesContext" typeConverterStatisticsEnabled="true" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="PersonCoreserviceRoute"/>
         <routeBuilder ref="FlightCoreserviceRoute"/>
     </camelContext>
+
+
 
 </beans>

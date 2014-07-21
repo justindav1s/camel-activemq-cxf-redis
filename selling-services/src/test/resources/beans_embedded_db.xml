@@ -29,10 +29,10 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
 
 
     <bean id="sellingDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-        <property name="url" value="jdbc:derby:MyDbTest;create=true"/>
-        <property name="username" value="app"/>
-        <property name="password" value="ba"/>
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost"/>
+        <property name="username" value="u760245"/>
+        <property name="password" value="12jnd34"/>
     </bean>
 
     <!--

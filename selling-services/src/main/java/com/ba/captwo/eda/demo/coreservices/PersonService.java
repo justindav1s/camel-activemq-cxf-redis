@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public interface PersonService {
 
     public Person createPerson(Person p);
+    public Person createPerson(String json);
     public Person readPerson(int personid);
     public Person updatePerson(Person p);
     public void deletePerson(int personId);

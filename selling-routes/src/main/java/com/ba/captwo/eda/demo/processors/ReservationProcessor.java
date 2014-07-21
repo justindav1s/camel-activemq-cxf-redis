@@ -38,8 +38,8 @@ public class ReservationProcessor implements Processor {
         r.setPerson(p);
         r.setError(e);
 
-        Response response = Response.status(Response.Status.OK).entity(r).build();
+        Response response = Response.status(Response.Status.OK).entity(RouteUtils.toJson(r)).build();
 
-        exchange.getOut().setBody(r.toString());
+        exchange.getIn().setBody(response);
     }
 }

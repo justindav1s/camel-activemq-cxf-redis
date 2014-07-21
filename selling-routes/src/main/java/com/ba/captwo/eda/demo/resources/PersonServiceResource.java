@@ -8,13 +8,11 @@ import javax.ws.rs.core.Response;
 /**
  * Created by u760245 on 05/07/2014.
  */
-@Component("PersonServiceResource")
 public class PersonServiceResource {
 
 
     @GET
     @Produces("application/json")
-    @Consumes("application/json")
     @Path("/create")
     public Response createPerson(
             @MatrixParam("fname") String fname,
@@ -24,14 +22,12 @@ public class PersonServiceResource {
 
     @GET
     @Produces("application/json")
-    @Consumes("application/json")
     @Path("/read")
     public Response readPerson(
             @MatrixParam("pid") int pid){return null;};
 
     @GET
     @Produces("application/json")
-    @Consumes("application/json")
     @Path("/update")
     public Response updatePerson(
             @MatrixParam("pid") int pid,
@@ -42,14 +38,12 @@ public class PersonServiceResource {
 
     @GET
     @Produces("application/json")
-    @Consumes("application/json")
     @Path("/delete")
     public Response deletePerson(
             @MatrixParam("pid") int pid){return null;};
 
     @GET
     @Produces("application/json")
-    @Consumes("application/json")
     @Path("/list")
     public Response listPersons(){return null;};
 }

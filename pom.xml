@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>openshift-deploy</module>
         <module>selling-api</module>
         <module>selling-services</module>
         <module>selling-routes</module>

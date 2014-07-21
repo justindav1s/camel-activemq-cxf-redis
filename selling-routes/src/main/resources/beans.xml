@@ -24,6 +24,7 @@
 
     <context:annotation-config/>
     <context:component-scan base-package="com.ba.captwo.eda.demo"/>
+    <context:component-scan base-package="com.ba.captwo.eda.demo.model"/>
     <context:component-scan base-package="com.ba.captwo.eda.demo.resources"/>
     <context:component-scan base-package="com.ba.captwo.eda.demo.routes"/>
     <context:component-scan base-package="com.ba.captwo.eda.demo.processors"/>
@@ -32,7 +33,7 @@
 
     <jaxrs:server id="services" address="/">
         <jaxrs:serviceBeans>
-            <bean class="com.ba.captwo.eda.demo.resources.PersonRouteResource"/>
+            <bean class="com.ba.captwo.eda.demo.resources.PersonAsyncRouteResource"/>
             <bean class="com.ba.captwo.eda.demo.resources.PersonServiceResource"/>
             <bean class="com.ba.captwo.eda.demo.resources.ReservationResource"/>
             <bean class="com.ba.captwo.eda.demo.resources.FlightEventResource"/>
@@ -48,7 +49,6 @@
     <cxf:rsServer id="reservationServer" address="/reservation"
                   serviceClass="com.ba.captwo.eda.demo.resources.ReservationResource"/>
 
-
     <cxf:rsServer id="personServer" address="/person"
                   serviceClass="com.ba.captwo.eda.demo.resources.PersonServiceResource"/>
 
@@ -56,15 +56,15 @@
     <bean id="ReservationRoute" class="com.ba.captwo.eda.demo.routes.ReservationRoute"/>
     <bean id="PersonServiceRoute" class="com.ba.captwo.eda.demo.routes.PersonServiceRoutes"/>
 
-    <camelContext id="ReservationContext" xmlns="http://camel.apache.org/schema/spring">
+    <camelContext id="ReservationContext" typeConverterStatisticsEnabled="true" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="ReservationRoute"/>
     </camelContext>
 
-    <camelContext id="FlightEventContext" xmlns="http://camel.apache.org/schema/spring">
+    <camelContext id="FlightEventContext" typeConverterStatisticsEnabled="true" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="FlightEventConsumerRoute"/>
     </camelContext>
 
-    <camelContext id="PersonServiceContext" xmlns="http://camel.apache.org/schema/spring">
+    <camelContext id="PersonServiceContext" typeConverterStatisticsEnabled="true" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="PersonServiceRoute"/>
     </camelContext>
 

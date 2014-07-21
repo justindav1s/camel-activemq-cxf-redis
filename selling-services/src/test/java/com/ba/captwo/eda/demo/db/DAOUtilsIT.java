@@ -61,7 +61,6 @@ public class DAOUtilsIT {
 
     }
 
-    @After
     public void dropSequence()   {
         log.debug("dropSequence");
         String sql = "DROP SEQUENCE BA_SEQ RESTRICT";
@@ -90,7 +89,6 @@ public class DAOUtilsIT {
         }
     }
 
-    @Before
     public void createSequence()   {
         log.debug("createSequence");
         //dropSequence();

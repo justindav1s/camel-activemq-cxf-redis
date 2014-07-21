@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>selling</artifactId>
+        <groupId>com.ba.captwo.eda.demo</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.ba.captwo.eda.demo</groupId>
+    <artifactId>openshift-deploy</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>openshift-deploy</name>
+    <description>Deploys the app to Openshift</description>
+    <url>http://www.jd.org</url>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <tomcat.port>80</tomcat.port>
+        <tomcat.username>tomcat</tomcat.username>
+        <tomcat.password>tomcat</tomcat.password>
+        <tomcat.host>jbossews-cap2.rhcloud.com</tomcat.host>
+    </properties>
+
+
+    <dependencies>
+
+        <!-- Hawt.io -->
+        <dependency>
+            <groupId>io.hawt</groupId>
+            <artifactId>hawtio-web</artifactId>
+            <version>1.4.10</version>
+            <scope>provided</scope>
+            <type>war</type>
+        </dependency>
+
+        <!--App stuff -->
+        <dependency>
+            <groupId>com.ba.captwo.eda.demo</groupId>
+            <artifactId>selling-services</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+            <type>war</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ba.captwo.eda.demo</groupId>
+            <artifactId>selling-routes</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+            <type>war</type>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>openshift-deploy</finalName>
+
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <version>1.4.8</version>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+        <plugins>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>reserve-network-port</id>
+                        <goals>
+                            <goal>reserve-network-port</goal>
+                        </goals>
+                        <phase>process-test-resources</phase>
+                        <configuration>
+                            <portNames>
+                                <portName>test.server.port</portName>
+                            </portNames>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.4.8</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat7x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.hostname>${tomcat.host}</cargo.hostname>
+                            <cargo.servlet.port>${tomcat.port}</cargo.servlet.port>
+                            <cargo.remote.username>${tomcat.username}</cargo.remote.username>
+                            <cargo.remote.password>${tomcat.password}</cargo.remote.password>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                             <groupId>io.hawt</groupId>
+                             <artifactId>hawtio-web</artifactId>
+                             <type>war</type>
+                            <properties>
+                                <context>/hawtio</context>
+                            </properties>
+                            <location>${basedir}/../selling-routes/hawtio/hawtio.war</location>
+                        </deployable>
+                        <deployable>
+                            <groupId>com.ba.captwo.eda.demo</groupId>
+                            <artifactId>selling-services</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>/selling</context>
+                            </properties>
+                        </deployable>
+                        <!--deployable>
+                            <groupId>com.ba.captwo.eda.demo</groupId>
+                            <artifactId>selling-routes</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>/routes</context>
+                            </properties>
+                        </deployable-->
+                    </deployables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

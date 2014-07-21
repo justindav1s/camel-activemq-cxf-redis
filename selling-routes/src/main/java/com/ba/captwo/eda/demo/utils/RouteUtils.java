@@ -1,9 +1,12 @@
 package com.ba.captwo.eda.demo.utils;
 
 import org.apache.camel.Message;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -22,5 +25,10 @@ public class RouteUtils {
         for (Map.Entry<String, Object> e : headers.entrySet())      {
             log.info("*** ["+processor+"] : Header : " + e.getKey() + " : " + e.getValue());
         }
+    }
+
+    public static String toJson(Object o) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(o);
     }
 }

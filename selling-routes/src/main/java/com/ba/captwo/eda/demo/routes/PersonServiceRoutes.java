@@ -1,12 +1,11 @@
 package com.ba.captwo.eda.demo.routes;
 
-import org.apache.camel.CamelContext;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
 
 
 /**
@@ -24,9 +23,11 @@ public class PersonServiceRoutes extends RouteBuilder {
         from(uri).startupOrder(2)                                                               .routeId("PersonServiceRoute")
                 .to("log:input")                                                                .id("PersonServiceRoute : Log input")
                 .to("RESTRequestProcessor")
+                .to("PersonProcessor")
                 .to("direct:PersonOpsCBR")                                                      .id("PersonServiceRoute : Route to Endpoint")
                 .to("log:output")
-                .to("PersonResponseProcessor");
+                .to("PersonResponseProcessor")
+                .end();
 
         from("direct:PersonOpsCBR").startupOrder(1)                                             .routeId("PersonServiceRoute : CBR")
             .choice()                                                                           .id("PersonServiceRoute : Which Operation ?")
@@ -37,7 +38,7 @@ public class PersonServiceRoutes extends RouteBuilder {
                 .when(header(Exchange.HTTP_PATH).isEqualTo("/update"))                          .id("PersonServiceRoute : when /update")
                     .to("direct-vm:selling.services.person.update")
                 .when(header(Exchange.HTTP_PATH).isEqualTo("/delete"))                          .id("PersonServiceRoute : when /delete")
-                    .to("direct-vm:selling.services.person.read")
+                    .to("direct-vm:selling.services.person.delete")
                 .when(header(Exchange.HTTP_PATH).isEqualTo("/list"))                            .id("PersonServiceRoute : when /list")
                     .to("direct-vm:selling.services.person.list");
 

@@ -69,7 +69,7 @@ public class BookingDAO {
 
     public Booking readBooking(int bookingnum)   {
 
-        String sql = "SELECT * FROM APP.BOOKINGS where BookingID = ?";
+        String sql = "SELECT * FROM BOOKINGS where BookingID = ?";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -112,7 +112,7 @@ public class BookingDAO {
 
     public Booking readBookingByFlightnum(String flightnum)   {
 
-        String sql = "SELECT * FROM APP.BOOKINGS where flightnum = ?";
+        String sql = "SELECT * FROM BOOKINGS where flightnum = ?";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -155,7 +155,7 @@ public class BookingDAO {
 
     public Booking updateBooking(Booking b)   {
 
-        String sql = "UPDATE APP.BOOKINGS SET PersonId = ?, flightnum = ?, tickets = ?, cabin = ? where BookingID = ?";
+        String sql = "UPDATE BOOKINGS SET PersonId = ?, flightnum = ?, tickets = ?, cabin = ? where BookingID = ?";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -190,7 +190,7 @@ public class BookingDAO {
 
     public void deleteBooking(int bookingNum)   {
 
-        String sql = "DELETE FROM APP.BOOKINGS where BookingId = ?";
+        String sql = "DELETE FROM BOOKINGS where BookingId = ?";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -220,7 +220,7 @@ public class BookingDAO {
     public ArrayList<Booking> listBookings()   {
 
         ArrayList<Booking> bookings = new ArrayList<Booking>();
-        String sql = "SELECT * FROM APP.BOOKINGS";
+        String sql = "SELECT * FROM BOOKINGS";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;

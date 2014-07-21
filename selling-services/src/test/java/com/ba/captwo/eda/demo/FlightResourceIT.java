@@ -40,6 +40,7 @@ public class FlightResourceIT {
         log.info("Test CREATE");
 
         Flight f = buildFlight();
+        flightDAO.deleteFlight(f.getFlightnum());
 
         String uri = "/flight/create;fnum="+f.getFlightnum()+";orig="+f.getOrigin()+";dest="+f.getDestination();
 
@@ -65,7 +66,7 @@ public class FlightResourceIT {
         log.info("Test READ");
 
         Flight f = buildFlight();
-
+        flightDAO.deleteFlight(f.getFlightnum());
         f = flightDAO.createFlight(f);
 
         WebClient client = WebClient.create(endpointUrl + "/flight/read;fnum="+f.getFlightnum());
@@ -90,7 +91,7 @@ public class FlightResourceIT {
         String newDest = "NYC";
 
         Flight f = buildFlight();
-
+        flightDAO.deleteFlight(f.getFlightnum());
         f = flightDAO.createFlight(f);
 
         String uri = "/flight/update;fnum="+f.getFlightnum()+";orig="+f.getOrigin()+";dest="+newDest;
@@ -120,7 +121,7 @@ public class FlightResourceIT {
         log.info("Test DELETE");
 
         Flight f = buildFlight();
-
+        flightDAO.deleteFlight(f.getFlightnum());
         f = flightDAO.createFlight(f);
 
         WebClient client = WebClient.create(endpointUrl + "/flight/delete;fnum="+f.getFlightnum());
@@ -138,7 +139,7 @@ public class FlightResourceIT {
         log.info("Test LIST");
 
         Flight f = buildFlight();
-
+        flightDAO.deleteFlight(f.getFlightnum());
         f = flightDAO.createFlight(f);
 
         WebClient client = WebClient.create(endpointUrl + "/flight/list");

@@ -7,10 +7,14 @@ import com.ba.captwo.eda.demo.model.Reservation;
 import com.ba.captwo.eda.demo.utils.RouteUtils;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+
+import org.apache.camel.component.cxf.common.message.CxfConstants;
+import org.apache.cxf.headers.Header;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 
 /**
@@ -30,16 +34,14 @@ public class PersonResponseProcessor implements Processor {
         Response response = null;
 
         if (exchange.getIn().getBody() != null)    {
-
             Object body =  exchange.getIn().getBody();
             log.debug("Body Type  : "+body.getClass());
-            response = Response.status(Response.Status.OK).entity(body.toString()).build();
-
+            response = Response.status(Response.Status.OK).header("content-type", "application/json").entity(RouteUtils.toJson(body)).build();
         }
         else    {
             response = Response.status(Response.Status.OK).entity("NULL RESPONSE").build();
         }
 
-        exchange.getOut().setBody(response);
+        exchange.getIn().setBody(response);
     }
 }

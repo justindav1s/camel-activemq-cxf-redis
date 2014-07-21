@@ -31,7 +31,7 @@ public class FlightDAO {
 
         log.debug("createFlight");
 
-        String sql = "INSERT INTO APP.FLIGHTS (flightnum, origin, destination) values (?, ?, ?)";
+        String sql = "INSERT INTO FLIGHTS (flightnum, origin, destination) values (?, ?, ?)";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -68,7 +68,7 @@ public class FlightDAO {
 
         log.debug("readFlight");
 
-        String sql = "SELECT * FROM APP.FLIGHTS where flightnum = ?";
+        String sql = "SELECT * FROM FLIGHTS where flightnum = ?";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -112,7 +112,7 @@ public class FlightDAO {
 
         log.debug("updateFlight");
         //log.info("Before : "+f.toString());
-        String sql = "UPDATE APP.FLIGHTS SET origin = ?, destination = ? where flightnum = ?";
+        String sql = "UPDATE FLIGHTS SET origin = ?, destination = ? where flightnum = ?";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -149,7 +149,7 @@ public class FlightDAO {
 
         log.debug("deleteFlight");
 
-        String sql = "DELETE FROM APP.FLIGHTS where flightnum = ?";
+        String sql = "DELETE FROM FLIGHTS where flightnum = ?";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;
@@ -181,7 +181,7 @@ public class FlightDAO {
         log.debug("listFlights");
 
         ArrayList<Flight> Flights = new ArrayList<Flight>();
-        String sql = "SELECT * FROM APP.FLIGHTS";
+        String sql = "SELECT * FROM FLIGHTS";
         //log.debug("Datasource : "+ sellingDatasource);
         ResultSet rs = null;
         PreparedStatement st = null;

@@ -26,7 +26,7 @@ public class PersonCoreServiceRoutes extends RouteBuilder {
     public void configure() throws Exception {
 
         from(create_uri).startupOrder(1)                                                    .routeId(create_uri)
-                .to("log:input")                                                            .id(create_uri+" : Log input")
+                .to("log:input")                                                            .id(create_uri + " : Log input")
                 .beanRef("PersonCoreServiceBean", "createPerson(${body})")                  .id(create_uri+" : execute")
                 .to("log:output")                                                           .id(create_uri+" : Log input");
 
@@ -36,7 +36,7 @@ public class PersonCoreServiceRoutes extends RouteBuilder {
                 .to("log:output")                                                           .id(read_uri+" : Log output");
 
         from(update_uri).startupOrder(3)                                                    .routeId(update_uri)
-                .to("log:input")                                                            .id(update_uri+" : Log input")
+                .to("log:input")                                                            .id(update_uri + " : Log input")
                 .beanRef("PersonCoreServiceBean", "updatePerson(${body})")                  .id(update_uri+" : execute")
                 .to("log:output")                                                           .id(update_uri+" : Log output");
 

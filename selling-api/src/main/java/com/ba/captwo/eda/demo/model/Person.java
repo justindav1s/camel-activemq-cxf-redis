@@ -1,9 +1,8 @@
 package com.ba.captwo.eda.demo.model;
-
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -11,14 +10,19 @@ import java.lang.reflect.Field;
 /**
  * Created by u760245 on 04/07/2014.
  */
-@XmlRootElement
+
 public class Person extends ResourceBase {
 
+    static final long serialVersionUID = 1L;
 
     private int personID = 0;
+
     private String lastName = null;
+
     private String firstName = null;
+
     private String address = null;
+
     private String city = null;
 
     public int getPersonID() {

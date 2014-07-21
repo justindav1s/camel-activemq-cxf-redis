@@ -41,7 +41,7 @@ public class FlightDAOIT {
     public void setUp() throws Exception {
 
         log.info("setUp");
-        createTable();
+        //createTable();
 
         log.info("buildTestFlights");
         testFlight = new Flight();
@@ -58,7 +58,7 @@ public class FlightDAOIT {
     @After
     public void tearDown() throws Exception {
         log.info("tearDown");
-        dropTable();
+        //dropTable();
     }
 
 
@@ -122,6 +122,7 @@ public class FlightDAOIT {
     public void testList() throws Exception {
 
         log.info("testList");
+        daoUtils.truncateTable("flights");
         flightDAO.deleteFlight(testFlight.getFlightnum());
         flightDAO.deleteFlight(testFlight2.getFlightnum());
         ArrayList<Flight> flights = flightDAO.listFlights();

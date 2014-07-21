@@ -8,12 +8,10 @@ import javax.xml.ws.Response;
 /**
  * Created by u760245 on 05/07/2014.
  */
-@Component("ReservationResource")
 public class ReservationResource {
 
     @GET
     @Produces("application/json")
-    @Consumes("application/json")
     @Path("/create")
     public Response createReservation(
             @MatrixParam("fname") String fname,

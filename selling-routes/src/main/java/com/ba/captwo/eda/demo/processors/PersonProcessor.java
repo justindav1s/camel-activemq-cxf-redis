@@ -24,20 +24,20 @@ public class PersonProcessor implements Processor {
 
         RouteUtils.messageLog("PersonProcessor", exchange.getIn());
 
-        Map<String, String> params = (Map<String, String>)exchange.getIn().getBody();
+        Map<String, Object> params = (Map<String, Object>)exchange.getIn().getHeaders();
         Booking b = new Booking();
         Person p = new Person();
-        p.setLastName(params.get("lname"));
-        p.setFirstName(params.get("fname"));
-        p.setAddress(params.get("address"));
-        p.setCity(params.get("city"));
+        //p.setPersonID((Integer)params.get("pid"));
+        p.setLastName((String)params.get("lname"));
+        p.setFirstName((String)params.get("fname"));
+        p.setAddress((String)params.get("address"));
+        p.setCity((String)params.get("city"));
 
         Message m = exchange.getIn();
-        RouteUtils.messageLog("BookingProcessor", exchange.getIn());
+        RouteUtils.messageLog("PersonProcessor", exchange.getIn());
 
         exchange.getIn().getHeaders().put("person", p);
-
-        Thread.sleep(500);
+        exchange.getIn().setBody(RouteUtils.toJson(p));
     }
 
 }

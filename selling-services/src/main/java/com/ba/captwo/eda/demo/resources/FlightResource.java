@@ -1,13 +1,7 @@
 package com.ba.captwo.eda.demo.resources;
 
-import com.ba.captwo.eda.demo.model.Error;
-import com.ba.captwo.eda.demo.model.Flight;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 
 /**
  * Created by u760245 on 05/07/2014.
