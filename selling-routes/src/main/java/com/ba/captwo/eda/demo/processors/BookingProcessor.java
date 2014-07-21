@@ -31,7 +31,6 @@ public class BookingProcessor implements Processor {
 
         exchange.getIn().getHeaders().put("booking", b);
 
-        Thread.sleep(500);
     }
 
 }
