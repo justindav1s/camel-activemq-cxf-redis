@@ -25,11 +25,6 @@
             <version>${cxf.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-ba</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
             <version>${jackson.version}</version>
@@ -139,14 +134,11 @@
             <scope>provided</scope>
         </dependency>
 
-
-
         <!-- App stuff -->
         <dependency>
             <groupId>com.ba.captwo.eda.demo</groupId>
             <artifactId>selling-api</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <!--scope>provided</scope-->
         </dependency>
 
     </dependencies>
@@ -228,12 +220,6 @@
                                 <type>jar</type>
                                 <classpath>shared</classpath>
                             </dependency>
-                            <!--dependency>
-                                <groupId>com.ba.captwo.eda.demo</groupId>
-                                <artifactId>selling-api</artifactId>
-                                <type>jar</type>
-                                <classpath>shared</classpath>
-                            </dependency-->
                         </dependencies>
                         <type>installed</type>
                         <artifactInstaller>
