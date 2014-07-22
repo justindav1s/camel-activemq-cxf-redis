@@ -17,13 +17,9 @@ http://www.springframework.org/schema/jee/spring-jee.xsd
 http://camel.apache.org/schema/spring
 http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <import resource="classpath:META-INF/cxf/cxf.xml"/>
 
-    <import resource="./default-beans.xml"/>
-    <import resource="./openshift-beans.xml"/>
 
     <context:property-placeholder system-properties-mode="OVERRIDE" location="classpath*:*.properties"/>
-
     <context:property-placeholder/>
     <context:annotation-config/>
     <context:component-scan base-package="com.ba.captwo.eda.demo"/>
@@ -31,6 +27,9 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
     <context:component-scan base-package="com.ba.captwo.eda.demo.resources"/>
     <context:component-scan base-package="com.ba.captwo.eda.demo.routes"/>
 
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="./default-beans.xml"/>
+    <import resource="./openshift-beans.xml"/>
 
     <jaxrs:server id="services" address="/">
         <jaxrs:serviceBeans>

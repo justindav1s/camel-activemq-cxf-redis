@@ -18,7 +18,7 @@ http://camel.apache.org/schema/spring
 http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
-
+    <context:property-placeholder system-properties-mode="OVERRIDE" location="classpath*:*.properties"/>
     <context:property-placeholder/>
     <context:annotation-config/>
     <context:component-scan base-package="com.ba.captwo.eda.demo"/>
@@ -30,9 +30,9 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <bean id="sellingDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://localhost"/>
-        <property name="username" value="u760245"/>
-        <property name="password" value="12jnd34"/>
+        <property name="url" value="jdbc:postgresql://${db.host}:${db.port}/${db.username}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
     </bean>
 
     <bean id="PersonCoreserviceRoutes" class="com.ba.captwo.eda.demo.routes.PersonCoreServiceRoutes"/>

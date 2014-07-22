@@ -2,7 +2,6 @@ package com.ba.captwo.eda.demo;
 
 import com.ba.captwo.eda.demo.db.FlightDAO;
 import com.ba.captwo.eda.demo.model.Flight;
-import com.ba.captwo.eda.demo.model.Person;
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -23,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/beans_remote_db.xml" })
+@ContextConfiguration(locations = {"/test_beans.xml"})
 public class FlightResourceIT {
     private static String endpointUrl;
     private final static Logger log = LoggerFactory.getLogger(FlightResourceIT.class);

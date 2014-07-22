@@ -1,12 +1,9 @@
 package com.ba.captwo.eda.demo;
 
 import com.ba.captwo.eda.demo.db.PersonDAO;
-import com.ba.captwo.eda.demo.model.Booking;
 import com.ba.captwo.eda.demo.model.Person;
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.MappingJsonFactory;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -21,15 +18,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/beans_remote_db.xml" })
+@ContextConfiguration(locations = {"/test_beans.xml"})
 public class PersonResourceIT {
     private static String endpointUrl;
     private final static Logger log = LoggerFactory.getLogger(PersonResourceIT.class);

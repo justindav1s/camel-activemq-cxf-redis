@@ -23,7 +23,7 @@ import javax.sql.DataSource;
  * Created by u760245 on 04/07/2014.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/beans_embedded_db.xml"})
+@ContextConfiguration(locations = {"/test_beans.xml"})
 public class DAOUtilsIT {
 
     private final Logger log = LoggerFactory.getLogger(DAOUtilsIT.class);

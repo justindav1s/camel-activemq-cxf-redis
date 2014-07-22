@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/beans_embedded_db.xml"})
+@ContextConfiguration(locations = {"/test_beans.xml"})
 public class LocalIT {
 
     private final static Logger log = LoggerFactory.getLogger(LocalIT.class);

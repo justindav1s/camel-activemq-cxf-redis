@@ -9,11 +9,21 @@
 
 
     <beans profile="openshift">
-        <jee:jndi-lookup id="sellingDatasource"
+
+        <!-- JNDI lookup for config from tomcat's context.xml -->
+        <jee:jndi-lookup id="sellingDatasource_jndi"
                          jndi-name="jdbc/SellingDatasource_os"
                          expected-type="javax.sql.DataSource"
                          lookup-on-startup="true"/>
+
+        <bean id="sellingDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="url" value="jdbc:postgresql://${db.host}:${db.port}/${db.username}"/>
+            <property name="username" value="${db.username}"/>
+            <property name="password" value="${db.password}"/>
+        </bean>
     </beans>
+
 
 
 </beans>

@@ -24,3 +24,4 @@ CREATE TABLE bookings (personID int,bookingId int,flightnum varchar(255),tickets
 CREATE TABLE flights(flightnum varchar(255),origin varchar(255),destination varchar(255),PRIMARY KEY (flightnum));
 CREATE TABLE loyalty(PersonID int, tier varchar(255), points int);
 
+psql -U u760245 -W u760245 u760245

@@ -17,15 +17,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/beans_remote_db.xml" })
+@ContextConfiguration(locations = {"/test_beans.xml"})
 public class BookingResourceIT {
     private static String endpointUrl;
     private final static Logger log = LoggerFactory.getLogger(BookingResourceIT.class);
