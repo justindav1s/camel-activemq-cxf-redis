@@ -26,7 +26,7 @@
         <tomcat.port>80</tomcat.port>
         <tomcat.username>tomcat</tomcat.username>
         <tomcat.password>tomcat</tomcat.password>
-        <tomcat.host>jbossews-cap2.rhcloud.com</tomcat.host>
+        <tomcat.host>jbossews-jd.cloudy.baplc.com</tomcat.host>
     </properties>
 
 
@@ -132,14 +132,14 @@
                                 <context>/selling</context>
                             </properties>
                         </deployable>
-                        <!--deployable>
+                        <deployable>
                             <groupId>com.ba.captwo.eda.demo</groupId>
                             <artifactId>selling-routes</artifactId>
                             <type>war</type>
                             <properties>
                                 <context>/routes</context>
                             </properties>
-                        </deployable-->
+                        </deployable>
                     </deployables>
                 </configuration>
             </plugin>
