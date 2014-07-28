@@ -10,7 +10,7 @@ import java.lang.reflect.Field;
 /**
  * Created by u760245 on 04/07/2014.
  */
-
+@XmlRootElement
 public class Person extends ResourceBase {
 
     static final long serialVersionUID = 1L;

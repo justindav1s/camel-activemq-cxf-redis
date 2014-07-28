@@ -1,11 +1,19 @@
 package com.ba.captwo.eda.demo.resources;
 
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 /**
  * Created by u760245 on 05/07/2014.
  */
+
+@CrossOriginResourceSharing(
+        allowAllOrigins = true,
+        allowCredentials = true
+)
+
 @Path("/person")
 public interface PersonResource {
 

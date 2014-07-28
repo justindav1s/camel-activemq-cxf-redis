@@ -10,23 +10,14 @@ import java.util.Set;
 
 class RedisListener extends JedisPubSub {
 
-    private final Logger log = LoggerFactory.getLogger(FlightEventSubscriber.class);
+    private final Logger log = LoggerFactory.getLogger(RedisListener.class);
 	private Jedis jedis = null;
 	
 	public RedisListener()	{
-		jedis = new Jedis("localhost");
-        log.debug("Jedis : "+jedis);
 	}
 	
     public void onMessage(String channel, String message) {
-        log.debug("onMessage : channel : "+channel+ " message : "+message+" : "+message.length());
-    	String flightnum = message;
-        Set<String> keys = jedis.keys("*");
-        log.debug("keys : "+  keys);
-
-        log.debug("Flightnum : "+flightnum+" data : "+jedis.hgetAll(flightnum));
-
-    	//do stuff with the data that has changed
+        log.debug("onMessage : Received from channel : "+channel+ " message : "+message+" : "+message.length());
     }
 
     public void onSubscribe(String channel, int subscribedChannels) {
@@ -46,7 +37,7 @@ class RedisListener extends JedisPubSub {
     }
 
     public void onPMessage(String pattern, String channel, String message) {    	
-    	log.debug("onPMessage : pattern : "+pattern+" channel : "+channel+ " message : "+message);
+    	log.debug("onPMessage : Received from channel : ["+channel+ "] pattern : ["+pattern+"] message : ["+message+"]");
     }
     
 }

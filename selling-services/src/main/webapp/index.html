@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" ng-app="sellingApp">
+<head>
+  <meta charset="utf-8">
+  <title>Selling App</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular/angular-resource.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/services.js"></script>
+</head>
+<body ng-controller="PersonListCtrl as plCtrl">
+
+  <div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+  					<div class="panel-body">
+						Search: <input ng-model="query">
+						Sort by:
+						<select ng-model="orderProp">
+							<option value="personID">ID</option>
+							<option value="lastName">Name</option>
+						</select>
+					</div>
+				</div>
+			</div>
+	  	</div>
+	  	<div class="row">&nbsp;</div>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="panel panel-default">
+  					<div class="panel-body">
+						<div ng-controller="NewPersonFormCtrl as npfCtrl">
+  							<form novalidate name="personform" class="person-form">
+  								<div class="row top-buffer">
+    								<div class="col-md-7"><b>New Person</b></div>
+								</div>
+  								<div class="row top-buffer">
+    								<div class="col-md-4">First Name:</div>
+    			   					<div class="col-md-3"><input required type="text" ng-model="person.firstName" ng-model-options="{ updateOn: 'blur' }"/></div>
+								</div>
+								<div class="row top-buffer">
+    								<div class="col-md-4">Last Name: </div>
+    								<div class="col-md-3"><input required type="text" ng-model="person.lastName" ng-model-options="{ updateOn: 'blur' }"/></div>
+    							</div>
+    							<div class="row top-buffer">
+    								<div class="col-md-4">Address: </div>
+    								<div class="col-md-3"><input required type="text" ng-model="person.address" ng-model-options="{ updateOn: 'blur' }"/></div>
+    							</div>
+    							<div class="row top-buffer">
+    								<div class="col-md-4">City: </div>
+    								<div class="col-md-3"><input required type="text" ng-model="person.city" ng-model-options="{ updateOn: 'blur' }"/></div>
+    							</div>
+    								<div class="row top-buffer">
+    								<div class="col-md-4"><button ng-click="reset()">RESET</button></div>
+    								<div class="col-md-3"><button ng-show="personform.$valid" ng-click="update(person)">SAVE</button></div>
+    								<p>{{person}}</p>
+    							</div>
+  							</form>
+  						</div>
+  					</div>
+  				</div>
+			</div>
+
+			<div class="col-md-9">
+				<div class="panel panel-default">
+  					<div class="panel-body">
+						<ul>
+							<li ng-repeat="person in people | filter:query | orderBy:orderProp">
+								<span>{{person.personID}}</span>
+								<p>{{person.firstName}} {{person.lastName}}</p>
+		  					</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+  </div>
+
+</body>
+</html>

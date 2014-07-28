@@ -36,7 +36,7 @@ public class FlightEventPublisher {
 	public void setflightEvent(String flightnum, String event, Date timestamp)	{
         log.debug("Publishing to flightnum : "+flightnum+" data : "+event);
 		jedis.hset(flightnum, event, timestamp.toString());
-		jedis.publish(FlightEventSubscriber.FLIGHT_EVENTS_CHAN, flightnum);
+		jedis.publish(FlightEventSubscriber.FLIGHT_EVENTS, flightnum);
         log.debug("Flightnum : "+flightnum+" data : "+jedis.hgetAll(flightnum));
 	}
 	

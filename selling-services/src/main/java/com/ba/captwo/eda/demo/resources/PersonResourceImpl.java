@@ -23,6 +23,9 @@ import java.util.ArrayList;
 public class PersonResourceImpl implements PersonResource{
 
     private final Logger log = LoggerFactory.getLogger(PersonResourceImpl.class);
+    private static final String PERSON_KEY = "PERSON";
+    private static final String PERSONLIST_KEY = "PERSONLIST";
+
 
     @Context
     HttpServletRequest request;
@@ -82,14 +85,15 @@ public class PersonResourceImpl implements PersonResource{
 
         try {
             HttpSession session = (HttpSession)request.getSession();
-            log.debug("readPerson SESSION : "+session);
 
-            p = (Person)session.getAttribute("PERSON");
+            log.debug("readPerson SESSION : "+ ((session != null) ? session.getId() : session));
+
+            p = (Person)session.getAttribute(PERSON_KEY);
 
             if (p == null) {
                 log.debug("Retrieving Person from DB");
                 p = personService.readPerson(pid);
-                session.setAttribute("PERSON", p);
+                session.setAttribute(PERSON_KEY, p);
             }
             else    {
                 log.debug("Retrieved Person from Session");
@@ -170,11 +174,27 @@ public class PersonResourceImpl implements PersonResource{
 
     public Response listPersons()    {
 
+        log.debug("ListPersons START");
+
         Response response = null;
 
+        ArrayList<Person> persons = null;
 
         try {
-            ArrayList<Person> persons = personService.listPersons();
+            HttpSession session = (HttpSession)request.getSession();
+            log.debug("ListPersons SESSION : "+((session != null) ? session.getId() : session));
+
+            persons = (ArrayList<Person>)session.getAttribute(PERSONLIST_KEY);
+
+            if (persons == null) {
+                log.debug("Retrieving Person List from DB");
+                persons = personService.listPersons();
+                session.setAttribute(PERSONLIST_KEY, persons);
+            }
+            else    {
+                log.debug("Retrieved Person List from Session");
+            }
+
             response = Response.status(Response.Status.OK).entity(persons).build();
         }
         catch (Exception e) {
@@ -182,6 +202,8 @@ public class PersonResourceImpl implements PersonResource{
             err.setMessage(e.getMessage());
             response = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(err).build();
         }
+
+        log.debug("ListPersons END");
 
         return response;
     }

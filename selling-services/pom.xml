@@ -25,6 +25,11 @@
             <version>${cxf.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-security-cors</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
             <version>${jackson.version}</version>
@@ -273,7 +278,7 @@
                         </goals>
                         <configuration>
                             <systemPropertyVariables>
-                                <service.url>http://localhost:${tomcat.listen.port}/${project.build.finalName}</service.url>
+                                <service.url>http://localhost:${tomcat.listen.port}/${project.build.finalName}/s</service.url>
                             </systemPropertyVariables>
                         </configuration>
                     </execution>

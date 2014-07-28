@@ -40,9 +40,12 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
             <bean class="com.ba.captwo.eda.demo.resources.FlightResourceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
+            <ref bean="cors-filter" />
             <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
         </jaxrs:providers>
     </jaxrs:server>
+
+    <bean id="cors-filter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
 
     <bean id="PersonCoreserviceRoute" class="com.ba.captwo.eda.demo.routes.PersonCoreServiceRoutes"/>
     <bean id="FlightCoreserviceRoute" class="com.ba.captwo.eda.demo.routes.FlightCoreServiceRoutes"/>
