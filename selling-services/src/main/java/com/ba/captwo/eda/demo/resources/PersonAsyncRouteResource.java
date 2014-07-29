@@ -8,6 +8,7 @@ import org.apache.camel.impl.DefaultCamelContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.MatrixParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import java.util.Map;
@@ -24,17 +25,12 @@ public class PersonAsyncRouteResource implements PersonResource {
     CamelContext camelContext = new DefaultCamelContext();
 
     @Override
-    public Response createPerson(String fname, String lname, String address, String city) {
+    public Response createPerson(Person p) {
 
         Response response = null;
         Object objCamelOut = null;
 
         try {
-            Person p = new Person();
-            p.setFirstName(fname);
-            p.setLastName(lname);
-            p.setAddress(address);
-            p.setCity(city);
 
             ProducerTemplate t = camelContext.createProducerTemplate();
             Future<Object> future = t.asyncRequestBody("direct-vm:selling.services.person.create", p);
@@ -55,6 +51,7 @@ public class PersonAsyncRouteResource implements PersonResource {
 
         return response;
     }
+
 
     @Override
     public Response readPerson(int pid) {
@@ -86,7 +83,7 @@ public class PersonAsyncRouteResource implements PersonResource {
     }
 
     @Override
-    public Response updatePerson(int pid, String fname, String lname, String address, String city) {
+    public Response updatePerson(int pid, Person p) {
         return null;
     }
 

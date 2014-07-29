@@ -3,6 +3,7 @@ package com.ba.captwo.eda.demo;
 import com.ba.captwo.eda.demo.model.Person;
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -64,12 +67,16 @@ public class PersonAsyncResourceIT {
 
     private Person createPerson()  throws Exception {
 
+        List<Object> providers = new ArrayList<Object>();
+        providers.add( new JacksonJsonProvider());
+
         Person p = buildPerson();
 
-        String uri = "/personasync/create;fname="+p.getFirstName()+";lname="+p.getLastName()+";address="+p.getAddress()+";city="+p.getCity();
+        String uri = "/personasync/create";
 
-        WebClient client = WebClient.create(endpointUrl + uri);
-        Response r = client.accept("application/json").get();
+        WebClient client = WebClient.create(endpointUrl + uri, providers);
+        Response r = client.accept("application/json").type("application/json").post(p);
+
         assertEquals(Response.Status.OK.getStatusCode(), r.getStatus());
         String value = IOUtils.toString((InputStream) r.getEntity());
         log.info("Create response : " + value);
@@ -86,7 +93,7 @@ public class PersonAsyncResourceIT {
         String uri = "/personasync/delete;;pid="+p.getPersonID();
 
         WebClient client = WebClient.create(endpointUrl + uri);
-        Response r = client.accept("application/json").get();
+        Response r = client.accept("application/json").delete();
         assertEquals(Response.Status.OK.getStatusCode(), r.getStatus());
         String value = IOUtils.toString((InputStream) r.getEntity());
         log.info("delete response : " + value);

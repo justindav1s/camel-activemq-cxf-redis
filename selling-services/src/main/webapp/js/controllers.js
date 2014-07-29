@@ -10,32 +10,36 @@ sellingApp.config(['$httpProvider', function($httpProvider) {
     }
 ]);
 
-sellingApp.controller('PersonListCtrl', ['$scope', '$http', 'ListPeople', function ($scope, $http, ListPeople) {
-    
-    //$http.get('http://localhost:8080/selling/person/list').success(function(data) {
-	//	console.log("Success", data);
-	//	$scope.people = data;
-    //})
-    //.error(function() {
-	//	console.log("error");
-	//});
-	
-	ListPeople.query(function(response) {
+sellingApp.controller('PersonListCtrl', ['$scope', 'PersonResource', function ($scope, PersonResource) {
+   
+   	PersonResource.list( function(response) {
       // Assign the response INSIDE the callback
       	console.log("Success", response);
 		$scope.people = response;
+    });
+     	
+	PersonResource.read({pid:'3691'}, function(response) {
+      // Assign the response INSIDE the callback
+      	console.log("Success", response);
+		$scope.sperson = response;
     });
 
 	$scope.orderProp = 'personID';
   }]);
 
-sellingApp.controller('NewPersonFormCtrl', ['$scope', '$http', 'ListPeople', function ($scope, $http, ListPeople) {
+sellingApp.controller('NewPersonFormCtrl', ['$scope', 'PersonResource', function ($scope, PersonResource) {
 	$scope.newperson = {};
 	
 	$scope.update = function(person) {
 		console.log("update");
 		console.log("person :" + angular.toJson(person, false));
 		$scope.newperson = angular.copy(person);
+			
+		PersonResource.create($scope.newperson, function(response) {
+      		console.log("Success", response);
+			$scope.sperson = response;
+			$scope.people.push(response);
+    	});
 	};
 
 	$scope.reset = function() {

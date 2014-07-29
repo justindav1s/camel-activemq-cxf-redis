@@ -33,31 +33,19 @@ public class PersonResourceImpl implements PersonResource{
     @Autowired
     PersonService personService;
 
-    public Response createPerson(
-            String fname,
-            String lname,
-            String address,
-            String city)    {
+    @Override
+    public Response createPerson(Person p)  {
 
-        log.debug("createPerson");
-        log.debug("fname : " + fname);
-        log.debug("lname : " + lname);
-        log.debug("address : " + address);
-        log.debug("city : " + city);
+        log.debug("createPerson POST Person Object");
+        log.debug("person : " + p.toString());
 
         Response response = null;
 
-        if ((fname == null) || (lname == null) || (address == null))  {
+        if ((p == null))  {
             Error err = new Error();
             err.setMessage("Incomplate Request");
             return Response.status(Response.Status.BAD_REQUEST).entity(err).build();
         }
-
-        Person p = new Person();
-        p.setFirstName(fname);
-        p.setLastName(lname);
-        p.setAddress(address);
-        p.setCity(city);
 
         try {
             p = personService.createPerson(p);
@@ -70,7 +58,9 @@ public class PersonResourceImpl implements PersonResource{
         }
 
         return response;
+
     }
+
 
 
     public Response readPerson(int pid)    {
@@ -111,31 +101,18 @@ public class PersonResourceImpl implements PersonResource{
         return response;
     }
 
+    @Override
+    public Response updatePerson(int pid, Person p)    {
 
-    public Response updatePerson(int pid, String fname, String lname, String address, String city)    {
-
-        log.debug("updatePerson");
-        log.debug("pid : " + pid);
-        log.debug("fname : " + fname);
-        log.debug("lname : " + lname);
-        log.debug("address : " + address);
-        log.debug("city : " + city);
-
+        log.debug("UpdatePerson STAR PID:"+pid);
 
         Response response = null;
 
-        if ((fname == null) || (lname == null) || (address == null))  {
+        if ((p == null) || (p.getPersonID() == 0) || (p.getFirstName() == null))  {
             Error err = new Error();
             err.setMessage("Incomplate Request");
             return Response.status(Response.Status.BAD_REQUEST).entity(err).build();
         }
-
-        Person p = new Person();
-        p.setPersonID(pid);
-        p.setFirstName(fname);
-        p.setLastName(lname);
-        p.setAddress(address);
-        p.setCity(city);
 
         try {
             p = personService.updatePerson(p);

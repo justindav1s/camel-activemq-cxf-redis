@@ -4,6 +4,8 @@ import com.ba.captwo.eda.demo.db.PersonDAO;
 import com.ba.captwo.eda.demo.model.Person;
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -18,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -38,7 +41,10 @@ public class PersonResourceIT {
 
     @Test
     public void testCreate() throws Exception {
-        log.info("Test CREATE");
+        log.info("Test CREATE POST");
+
+        List<Object> providers = new ArrayList<Object>();
+        providers.add( new JacksonJsonProvider());
 
         Person testPerson = new Person();
         testPerson.setLastName("Windsor");
@@ -46,10 +52,10 @@ public class PersonResourceIT {
         testPerson.setAddress("Kensington Palace");
         testPerson.setCity("London");
 
-        String uri = "/person/create;fname=William;lname=Windsor;address=Kensington Palace;city=London";
+        String uri = "/person/create";
 
-        WebClient client = WebClient.create(endpointUrl + uri);
-        Response r = client.accept("application/json").get();
+        WebClient client = WebClient.create(endpointUrl + uri, providers);
+        Response r = client.accept("application/json").type("application/json").post(testPerson);
         assertEquals(Response.Status.OK.getStatusCode(), r.getStatus());
         String value = IOUtils.toString((InputStream)r.getEntity());
         log.info("Create response : "+value);
@@ -60,6 +66,7 @@ public class PersonResourceIT {
 
         personDAO.deletePerson(p.getPersonID());
     }
+
 
     @Test
     public void testRead() throws Exception {
@@ -116,7 +123,10 @@ public class PersonResourceIT {
 
     @Test
     public void testUpdate() throws Exception {
-        log.info("Test UPDATE");
+        log.info("Test UPDATE START");
+
+        List<Object> providers = new ArrayList<Object>();
+        providers.add( new JacksonJsonProvider());
 
         String oldLame = "Windsor";
         String newLname = "Cambridge";
@@ -129,10 +139,13 @@ public class PersonResourceIT {
 
         testPerson = personDAO.createPerson(testPerson);
 
-        String uri = "/person/update;pid="+testPerson.getPersonID()+";fname=William;lname="+newLname+";address=Kensington Palace;city=London";
+        String uri = "/person/update;pid="+testPerson.getPersonID();
 
-        WebClient client = WebClient.create(endpointUrl + uri);
-        Response r = client.accept("application/json").get();
+        //change name
+        testPerson.setLastName(newLname);
+
+        WebClient client = WebClient.create(endpointUrl + uri, providers);
+        Response r = client.accept("application/json").type("application/json").put(testPerson);
         assertEquals(Response.Status.OK.getStatusCode(), r.getStatus());
         String value = IOUtils.toString((InputStream)r.getEntity());
         log.info("Update response : "+value);
@@ -164,7 +177,7 @@ public class PersonResourceIT {
         testPerson = personDAO.createPerson(testPerson);
 
         WebClient client = WebClient.create(endpointUrl + "/person/delete;pid="+testPerson.getPersonID());
-        Response r = client.accept("application/json").get();
+        Response r = client.accept("application/json").delete();
         assertEquals(Response.Status.OK.getStatusCode(), r.getStatus());
         String value = IOUtils.toString((InputStream)r.getEntity());
         log.info("Delete response : "+value);

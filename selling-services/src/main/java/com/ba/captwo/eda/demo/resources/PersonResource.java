@@ -1,5 +1,6 @@
 package com.ba.captwo.eda.demo.resources;
 
+import com.ba.captwo.eda.demo.model.Person;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 
 import javax.ws.rs.*;
@@ -18,15 +19,12 @@ import javax.ws.rs.core.Response;
 public interface PersonResource {
 
 
-    @GET
+
+    @POST
     @Produces("application/json")
     @Consumes("application/json")
     @Path("/create")
-    public Response createPerson(
-            @MatrixParam("fname") String fname,
-            @MatrixParam("lname") String lname,
-            @MatrixParam("address") String address,
-            @MatrixParam("city") String city);
+    public Response createPerson(Person p);
 
     @GET
     @Produces("application/json")
@@ -35,18 +33,13 @@ public interface PersonResource {
     public Response readPerson(
             @MatrixParam("pid") int pid);
 
-    @GET
+    @PUT
     @Produces("application/json")
     @Consumes("application/json")
     @Path("/update")
-    public Response updatePerson(
-            @MatrixParam("pid") int pid,
-            @MatrixParam("fname") String fname,
-            @MatrixParam("lname") String lname,
-            @MatrixParam("address") String address,
-            @MatrixParam("city") String city);
+    public Response updatePerson(@MatrixParam("pid") int pid, Person p);
 
-    @GET
+    @DELETE
     @Produces("application/json")
     @Consumes("application/json")
     @Path("/delete")
