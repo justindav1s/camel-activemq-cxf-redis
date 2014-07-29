@@ -33,6 +33,47 @@ public class PersonResourceImpl implements PersonResource{
     @Autowired
     PersonService personService;
 
+
+    @Override
+    public Response createPersonQueryString(
+            String fname,
+            String lname,
+            String address,
+            String city)    {
+
+        log.debug("createPerson POST");
+        log.debug("fname : " + fname);
+        log.debug("lname : " + lname);
+        log.debug("address : " + address);
+        log.debug("city : " + city);
+
+        Response response = null;
+
+        if ((fname == null) || (lname == null) || (address == null))  {
+            Error err = new Error();
+            err.setMessage("Incomplate Request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(err).build();
+        }
+
+        Person p = new Person();
+        p.setFirstName(fname);
+        p.setLastName(lname);
+        p.setAddress(address);
+        p.setCity(city);
+
+        try {
+            p = personService.createPerson(p);
+            response = Response.status(Response.Status.OK).entity(p).build();
+        }
+        catch (Exception e) {
+            com.ba.captwo.eda.demo.model.Error err = new Error();
+            err.setMessage(e.getMessage());
+            response = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(err).build();
+        }
+
+        return response;
+    }
+
     @Override
     public Response createPerson(Person p)  {
 

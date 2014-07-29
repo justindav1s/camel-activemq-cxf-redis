@@ -52,6 +52,12 @@ public class PersonAsyncRouteResource implements PersonResource {
         return response;
     }
 
+    public Response createPersonQueryString(
+            String fname,
+            String lname,
+            String address,
+            String city) {return null;}
+
 
     @Override
     public Response readPerson(int pid) {

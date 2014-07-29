@@ -19,6 +19,16 @@ import javax.ws.rs.core.Response;
 public interface PersonResource {
 
 
+    @POST
+    @Produces("application/json")
+    @Consumes("application/json")
+    @Path("/qcreate")
+    public Response createPersonQueryString(
+            @MatrixParam("fname") String fname,
+            @MatrixParam("lname") String lname,
+            @MatrixParam("address") String address,
+            @MatrixParam("city") String city);
+
 
     @POST
     @Produces("application/json")

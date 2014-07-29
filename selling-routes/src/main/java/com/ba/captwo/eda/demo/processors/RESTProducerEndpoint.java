@@ -6,6 +6,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by u760245 on 07/07/2014.
@@ -31,6 +34,9 @@ public class RESTProducerEndpoint implements Processor {
 
         log.debug("***THREAD : "+ Thread.currentThread().toString());
 
+        List<Object> providers = new ArrayList<Object>();
+        providers.add( new JacksonJsonProvider());
+
         String uri = (String)exchange.getIn().getHeader(Exchange.HTTP_BASE_URI);
         String accept = (String)exchange.getIn().getHeader(Exchange.ACCEPT_CONTENT_TYPE);
         String query = (String)exchange.getIn().getHeader(Exchange.HTTP_QUERY);
@@ -40,7 +46,7 @@ public class RESTProducerEndpoint implements Processor {
         log.info("CALLING : "+method+":"+uri + query);
         log.info("RESPONSE_TYPE : "+responseType);
 
-        WebClient client = WebClient.create(uri + query);
+        WebClient client = WebClient.create(uri + query, providers);
 
         Response r = null;
 
@@ -48,9 +54,9 @@ public class RESTProducerEndpoint implements Processor {
             r = client.accept(accept).get();
         }
         else if ("POST".equalsIgnoreCase(method))   {
-            String payloadHeader = (String)exchange.getIn().getHeader(POST_PAYLOAD_HEADER_NAME);
-            String payload = (String)exchange.getIn().getHeader(payloadHeader);
-            r = client.accept(accept).post(payload);
+            //String payloadHeader = (String)exchange.getIn().getHeader(POST_PAYLOAD_HEADER_NAME);
+            //String payload = (String)exchange.getIn().getHeader(payloadHeader);
+            r = client.accept("application/json").type("application/json").post("");
         }
 
         String value = IOUtils.toString((InputStream) r.getEntity());

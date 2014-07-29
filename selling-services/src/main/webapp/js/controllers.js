@@ -10,43 +10,99 @@ sellingApp.config(['$httpProvider', function($httpProvider) {
     }
 ]);
 
-sellingApp.controller('PersonListCtrl', ['$scope', 'PersonResource', function ($scope, PersonResource) {
+sellingApp.controller('PersonCtrl', ['$scope', 'PersonResource', function ($scope, PersonResource) {
    
-   	PersonResource.list( function(response) {
-      // Assign the response INSIDE the callback
+	$scope.people = {};
+	$scope.searchperson = {};
+	$scope.editperson = {};
+	$scope.formTitle = "New Person";
+	$scope.formSubmitButtonTitle = "Save";
+			
+	PersonResource.list(function(response) {
       	console.log("Success", response);
 		$scope.people = response;
     });
-     	
-	PersonResource.read({pid:'3691'}, function(response) {
-      // Assign the response INSIDE the callback
-      	console.log("Success", response);
-		$scope.sperson = response;
-    });
-
-	$scope.orderProp = 'personID';
-  }]);
-
-sellingApp.controller('NewPersonFormCtrl', ['$scope', 'PersonResource', function ($scope, PersonResource) {
-	$scope.newperson = {};
 	
-	$scope.update = function(person) {
-		console.log("update");
+	$scope.search = function(personID) {
+		console.log("search");
+		console.log("personID :" + angular.toJson(personID, false));
+     	
+		PersonResource.read({pid:personID}, function(response) {
+			console.log("Success", response);
+			$scope.searchperson = response;
+    	});   	
+    };
+    
+    $scope.edit = function(person)	{
+    	console.log("edit");
+    	$scope.editperson = angular.copy(person);
+    	$scope.formTitle = "Update Person";
+    	$scope.formSubmitButtonTitle = "Update";  	
+    };
+    
+    $scope.createOrUpdate = function(person)	{
+    	console.log("createOrUpdate ID : "+person.personID);
+    	$scope.editperson = person;
+    	if (typeof $scope.editperson.personID == 'undefined') {
+    		console.log("creating !!!!");
+    		create($scope.editperson);
+    	}
+    	else	{
+    		console.log("Updating !!!!");
+    		update($scope.editperson);
+    	}	
+    };
+    
+    
+    $scope.delete = function(person) {
+		console.log("delete");
 		console.log("person :" + angular.toJson(person, false));
-		$scope.newperson = angular.copy(person);
 			
-		PersonResource.create($scope.newperson, function(response) {
+		PersonResource.delete({pid:person.personID}, person, function(response) {
       		console.log("Success", response);
-			$scope.sperson = response;
-			$scope.people.push(response);
-    	});
+      					
+			PersonResource.list(function(response) {
+      			console.log("Success", response);
+				$scope.people = response;
+    		}); 
+    	});   	
 	};
-
+    
 	$scope.reset = function() {
 		console.log("reset");
-		$scope.person = {};
+		$scope.editperson = {};
+		$scope.formTitle = "New Person";
+		$scope.formSubmitButtonTitle = "Save";
 	};
-
+	
 	$scope.reset();
+    
+    var create = function(person) {
+		console.log("create");
+		console.log("person :" + angular.toJson(person, false));
+					
+		PersonResource.create(person, function(response) {
+      		console.log("Success", response);
+			$scope.people.push(response);
+			$scope.editperson = {};
+    	});    	
+	};
+	
+	var update = function(person) {
+		console.log("update");
+		console.log("person :" + angular.toJson(person, false));
+			
+		PersonResource.update({pid:person.personID}, person, function(response) {
+      		console.log("Success", response);
+			$scope.editperson = {};
+			
+			PersonResource.list(function(response) {
+      			console.log("Success", response);
+				$scope.people = response;
+    		}); 
+    	});   	
+	};
+    
 
 }]);
+

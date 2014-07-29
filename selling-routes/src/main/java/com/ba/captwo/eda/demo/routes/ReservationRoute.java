@@ -31,8 +31,8 @@ public class ReservationRoute extends RouteBuilder {
 
     @Value("${remote.rest.server}") public String remote_rest_server;
 
-    private String createPersonQuery = "/selling/person/create;lname=${in.header.lname};fname=${in.header.fname};address=${in.header.address};city=${in.header.city}";
-    private String createBookingQuery = "/selling/booking/create;pid=0;fnum=${in.header.fnum};ticks=${in.header.ticks};cab=${in.header.cab}";
+    private String createPersonQuery = "/selling/s/person/qcreate;lname=${in.header.lname};fname=${in.header.fname};address=${in.header.address};city=${in.header.city}";
+    private String createBookingQuery = "/selling/s/booking/create;pid=0;fnum=${in.header.fnum};ticks=${in.header.ticks};cab=${in.header.cab}";
 
 
     @Override
@@ -50,7 +50,7 @@ public class ReservationRoute extends RouteBuilder {
         from("direct:CallPersonService").startupOrder(1)                                        .routeId("CallPersonServiceRoute")
                 .setHeader(Exchange.HTTP_BASE_URI, constant(remote_rest_server))                .id("PersonService : Set URL")
                 .setHeader(Exchange.HTTP_QUERY, simple(createPersonQuery))                      .id("PersonService : Set Query String")
-                .setHeader(Exchange.HTTP_METHOD, constant("GET"))                               .id("PersonService : Set HTTP Method")
+                .setHeader(Exchange.HTTP_METHOD, constant("POST"))                               .id("PersonService : Set HTTP Method")
                 .setHeader(RESTProducerEndpoint.RESPONSE_TYPE, constant(Person.class.getName())).id("PersonService : Set Response Type")
                 .to("RESTProducerEndpoint")                                                     .id("PersonService : Send REST Request");
 

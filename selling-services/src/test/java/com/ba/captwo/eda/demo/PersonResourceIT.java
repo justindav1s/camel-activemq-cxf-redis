@@ -39,6 +39,38 @@ public class PersonResourceIT {
         endpointUrl = System.getProperty("service.url");
     }
 
+
+    @Test
+    public void testCreatePersonWithQueryString()  throws Exception {
+
+        List<Object> providers = new ArrayList<Object>();
+        providers.add( new JacksonJsonProvider());
+
+        log.info("***** createPerson START");
+        Person p = new Person();
+        p.setLastName("Windsor");
+        p.setFirstName("William");
+        p.setAddress("Kensington Palace");
+        p.setCity("London");
+
+        String uri = "/person/qcreate;fname="+p.getFirstName()+";lname="+p.getLastName()+";address="+p.getAddress()+";city="+p.getCity();
+
+        log.info("***** URI :" + endpointUrl + uri);
+
+        WebClient client = WebClient.create(endpointUrl + uri, providers);
+        Response r = client.accept("application/json").type("application/json").post("");
+        String value = IOUtils.toString((InputStream) r.getEntity());
+        log.info("Create response : " + value);
+
+        ObjectMapper mapper = new ObjectMapper();
+        Person p2 = mapper.readValue(value, Person.class);
+        log.info("Create pd : " + p2.getPersonID());
+
+        log.info("***** createPerson END");
+
+
+    }
+
     @Test
     public void testCreate() throws Exception {
         log.info("Test CREATE POST");

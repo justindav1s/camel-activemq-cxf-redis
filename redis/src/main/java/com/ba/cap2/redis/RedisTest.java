@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -21,24 +22,25 @@ public class RedisTest {
     public static void main(String[] args)  {
 
         RedisTest rt = new RedisTest();
-        rt.sendEvent();
-        /**
+        //rt.sendEvent();
+
         Jedis jedis = new Jedis("localhost");
-        for (int i = 0; i < 1000; i++)   {
+        for (int i = 0; i < 1; i++)   {
             log.debug("inserting : BA0"+i);
-              rt.insertKey(jedis, "FLIGHTS:BA0"+i, rt.getRandomMap());
+            rt.insertKey(jedis, "FLIGHTS:BA0"+i, rt.getRandomMap());
+
         }
 
-        for (int i = 0; i < 150000; i++)   {
+        for (int i = 0; i < 1; i++)   {
             log.debug("inserting : Jane"+i);
             rt.insertKey(jedis, "PAX:Janet"+i, rt.getRandomMap());
         }
 
-        for (int i = 0; i < 150000; i++)   {
+        for (int i = 0; i < 1; i++)   {
             log.debug("inserting : John"+i);
             rt.insertKey(jedis, "PAX:John"+i, rt.getRandomMap());
         }
-        */
+
     }
 
     private void sendEvent()   {
@@ -105,5 +107,15 @@ public class RedisTest {
            return rString.nextString(stringLength);
 
     }
+
+    private void saveMap(String key, Map<String, String> map)   {
+
+        HashMap<String, HashMap<String, String>> saveMe = new HashMap<String, HashMap<String, String>>();
+        String filename = "key_"+key+".out";
+
+
+    }
+
+
 
 }
